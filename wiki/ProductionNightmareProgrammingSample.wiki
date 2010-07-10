@@ -1,0 +1,38 @@
+= WS Client side exception handling chaos - A production nightmare programming sample =
+
+Developers are always too concerned about many things, like making the Web Service call work right for them and implementing the biz requirements. So handling exceptions and giving them proper treatment is mostly not a priority. Developers usually check the API docs/samples and production ready product usually evolves from the foundation laid by those sample codes. So in an example scenario, developer mostly use the client side web service toolkit like this
+
+
+= Bad Code Sample =
+
+{{{
+// Code sample that shows, the web service exception being caught and eaten
+private void querySample() {
+  QueryResult qr = null;
+  try {
+    // Assuming binding was created already via login
+    qr = binding.query("select FirstName, LastName from Contact");
+    // do something with QueryResult here
+  }catch (Exception ex) {
+    System.out.println("\nFailed to execute query successfully, error message was: \n" + 
+                       ex.getMessage());
+  }
+}
+}}}
+
+or 
+
+{{{
+// Code sample that shows that Web service exceptions are thrown, no handling done.
+private void querySample() throws Exception {
+  QueryResult qr = null;
+  // Assuming binding was created already via login
+  qr = binding.query("select FirstName, LastName from Contact");
+  // do something with QueryResult here
+}
+}}}
+
+Sample codes are not meant to explain the exception handling and such practices, its usually out of scope in that context. So its clearly visible, when one is using Client APIs for a Web Service, correct exception handling becomes really important. We will try explaining these with 2 very common scenarios/exceptions, where its possible to recover from certain error but the code crashed :
+
+ * Exception 1: Connection timeout or Unknownhost Error: This error might temporarily come in your internet connection because of some DNS/internet issues.  
+ * Exception 2: Service temporarily down: Again on getting this error, we are failing fast in above code samples.
