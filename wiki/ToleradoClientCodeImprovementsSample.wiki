@@ -1,6 +1,10 @@
 = Introduction =
+This page explains how Tolerado improves the client side web service code and migrates it to more stability. 
 
+= Why Client Code improvement is required ? =
 Developers are always too concerned about many things, like making the Web Service call work right for them and implementing the biz requirements. So handling exceptions and giving them proper treatment is mostly not a priority. Developers usually check the API docs/samples and production ready product usually evolves from the foundation laid by those sample codes. 
+
+So, Tolerado jumps in here to touch the areas often ignored in web service programming.
 
 = Code Samples =
 Here we will try touching areas of common programming issues and how Tolerado would fix them.
