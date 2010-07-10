@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="libs/axis.jar;libs/jaxrpc.jar" destdir="docs/javadocs" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.tgerm.tolerado.ws,com.tgerm.tolerado.ws.sample.sfdc.query" source="1.6" sourcepath="java-src/main/src;java-src/main/src-sfdc-wsdl" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
