@@ -30,3 +30,5 @@ private void querySample() {
   }
 }
 }}}
+
+After using Tolerado stub 
