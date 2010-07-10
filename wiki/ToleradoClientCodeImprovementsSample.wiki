@@ -1,0 +1,28 @@
+= Introduction =
+
+Developers are always too concerned about many things, like making the Web Service call work right for them and implementing the biz requirements. So handling exceptions and giving them proper treatment is mostly not a priority. Developers usually check the API docs/samples and production ready product usually evolves from the foundation laid by those sample codes. 
+
+= Code Samples =
+Here we will try touching areas of common programming issues and how Tolerado would fix them.
+
+== Sample 1 : Making Partner/Metadata/Apex Calls ==
+
+When working Salesforce Axis client stubs, following are 2 very common scenarios/exceptions, where its possible to recover from  errors but the code crashed :
+
+ * Exception 1: Connection timeout or Unknownhost Error: This error might temporarily come in your internet connection because of some DNS/internet issues.  
+ * Exception 2: Service temporarily down: Again on getting this error, we are failing fast in above code samples.
+
+{{{
+// Code sample that shows, the web service exception being caught and eaten
+private void querySample() {
+  QueryResult qr = null;
+  try {
+    // Assuming binding was created already via login
+    qr = binding.query("select FirstName, LastName from Contact");
+    // do something with QueryResult here
+  }catch (Exception ex) {
+    System.out.println("\nFailed to execute query successfully, error message was: \n" + 
+                       ex.getMessage());
+  }
+}
+}}}
