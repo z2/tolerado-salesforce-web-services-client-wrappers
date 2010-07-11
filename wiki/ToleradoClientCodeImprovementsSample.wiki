@@ -48,6 +48,7 @@ When working Salesforce Axis client stubs, following are 2 very common scenarios
 After using Tolerado stub, you will get something very similar. But many other stuff transparently. Check the code sample below.
 
 {{{
+// NOTE: No try catch block, a RunTimeException ToleradoException is thrown if the failure // is not recoverable
 
 // All the hassle of doing login and setting headers encapsulated in this single call
 // ToleradoStub is a ready to use stub, with no changes required
