@@ -36,7 +36,7 @@ import com.sforce.soap.partner.fault.ExceptionCode;
 import com.sforce.soap.partner.fault.LoginFault;
 import com.tgerm.tolerado.exception.ToleradoException;
 import com.tgerm.tolerado.ws.sfdc.Credential;
-import com.tgerm.tolerado.ws.sfdc.method.WSMethod;
+import com.tgerm.tolerado.ws.sfdc.method.WSRecoverableMethod;
 import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStub;
 
 /**
@@ -44,7 +44,7 @@ import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStub;
  * 
  */
 public class LoginWSMethod extends
-		WSMethod<ToleradoStub, ToleradoStub> {
+		WSRecoverableMethod<ToleradoStub, ToleradoStub> {
 	private Credential credential;
 	private Class<? extends ToleradoStub> stubClass;
 
