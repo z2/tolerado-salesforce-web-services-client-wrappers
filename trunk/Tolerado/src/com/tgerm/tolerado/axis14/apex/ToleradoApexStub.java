@@ -26,7 +26,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.ws.sfdc.stub;
+package com.tgerm.tolerado.axis14.apex;
 
 import javax.xml.rpc.ServiceException;
 
@@ -38,8 +38,9 @@ import com.sforce.soap._2006._08.apex.RunTestsRequest;
 import com.sforce.soap._2006._08.apex.RunTestsResult;
 import com.sforce.soap._2006._08.apex.SessionHeader;
 import com.sforce.soap.partner.LoginResult;
-import com.tgerm.tolerado.exception.ToleradoException;
-import com.tgerm.tolerado.ws.sfdc.method.WSRecoverableMethod;
+import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
+import com.tgerm.tolerado.axis14.partner.ToleradoStub;
+import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * @author abhinav

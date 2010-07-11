@@ -26,7 +26,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.ws.sfdc.stub;
+package com.tgerm.tolerado.axis14.metadata;
 
 import javax.xml.rpc.ServiceException;
 
@@ -36,7 +36,8 @@ import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
 import com.sforce.soap._2006._04.metadata.MetadataServiceLocator;
 import com.sforce.soap._2006._04.metadata.SessionHeader;
 import com.sforce.soap.partner.LoginResult;
-import com.tgerm.tolerado.exception.ToleradoException;
+import com.tgerm.tolerado.axis14.partner.ToleradoStub;
+import com.tgerm.tolerado.common.ToleradoException;
 
 public class ToleradoMetaStub extends ToleradoStub {
 	private MetadataBindingStub binding;

@@ -26,7 +26,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.ws.sfdc.stub;
+package com.tgerm.tolerado.axis14.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,8 +34,11 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.tgerm.tolerado.ws.sfdc.Credential;
-import com.tgerm.tolerado.ws.sfdc.method.impl.LoginWSMethod;
+import com.tgerm.tolerado.axis14.apex.ToleradoApexStub;
+import com.tgerm.tolerado.axis14.core.method.impl.LoginWSMethod;
+import com.tgerm.tolerado.axis14.metadata.ToleradoMetaStub;
+import com.tgerm.tolerado.axis14.partner.ToleradoStub;
+import com.tgerm.tolerado.common.Credential;
 
 /**
  * @author abhinav

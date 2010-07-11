@@ -25,14 +25,13 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.tgerm.tolerado.ws.sfdc.query;
+package com.tgerm.tolerado.axis14.partner;
 
 import com.sforce.soap.partner.QueryOptions;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SforceServiceLocator;
 import com.sforce.soap.partner.SoapBindingStub;
 import com.sforce.soap.partner.sobject.SObject;
-import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStub;
 
 /**
  * SFDC Web service Query Helper class. When querying with Salesforce partner
