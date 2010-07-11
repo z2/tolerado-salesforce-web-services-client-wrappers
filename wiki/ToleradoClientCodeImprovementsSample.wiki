@@ -45,7 +45,7 @@ When working Salesforce Axis client stubs, following are 2 very common scenarios
 
 }}}
 
-After using Tolerado stub, you will get something very similar. But many other stuff transparently. Check the code sample below.
+After using *Tolerado stub*, you will get something very similar. But many other stuff transparently. Check the code sample below.
 
 {{{
     // NOTE: No try catch block, a RunTimeException ToleradoException is thrown if the failure // is not recoverable
@@ -110,7 +110,7 @@ First we will show the normal code without Tolerado framework
 
 }}}
 
-Now we will show the Tolerado simplified code sample
+Now we will show the *Tolerado simplified code sample*
 
 {{{
     // Cached, Recoverable Stub
