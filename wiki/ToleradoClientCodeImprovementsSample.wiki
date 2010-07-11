@@ -18,10 +18,21 @@ When working Salesforce Axis client stubs, following are 2 very common scenarios
 
 {{{
 // Code sample that shows, the web service exception being caught and eaten
-private void querySample() {
+
   QueryResult qr = null;
   try {
-    // Assuming binding was created already via login
+    // All your code to create the binding and set the correct headers 
+    // .... 
+    // ...
+    binding = (SoapBindingStub) new SforceServiceLocator().getSoap();  
+    // ...
+    LoginResult loginResult = binding.login(userName, password);
+    binding._setProperty(SoapBindingStub.ENDPOINT_ADDRESS_PROPERTY,
+				loginResult.getServerUrl());
+    SessionHeader sh = new SessionHeader();
+    sh.setSessionId(loginResult.getSessionId());
+    binding.setHeader(new SforceServiceLocator().getServiceName()
+				.getNamespaceURI(), "SessionHeader", sh);
     qr = binding.query("select FirstName, LastName from Contact");
     // ... 
     // process the results within QueryResult 
@@ -31,7 +42,7 @@ private void querySample() {
     System.out.println("\nFailed to execute query successfully, error message was: \n" + 
                        ex.getMessage());
   }
-}
+
 }}}
 
 After using Tolerado stub, you will get something very similar. But many other stuff transparently. Check the code sample below.
