@@ -1,3 +1,4 @@
+#labels Featured
 This page explains about various components of Tolerado
 
 = Introduction =
@@ -9,10 +10,3 @@ Tolerado has 3 high level components.
  # ToleradoQuery : Its a partner query helper class. When querying with partner binding you can directly fetch only 500 records. To fetch more then 500 one needs to use queryMore() API, this API requires setting some headers and maintaining a cursor on client. This class simplifies and exposes and easy to use interface to queryMore() API, so it does all the ground work for making the call correctly.
 
  # ToleradoSObject : Wraps the com.sforce.soap.partner.sobject.SObject class, so that creating, updating and working with attributes can be pretty correct and easy.
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
