@@ -33,7 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import com.sforce.soap.partner.sobject.SObject;
 import com.tgerm.tolerado.cfg.LoginCfg;
 import com.tgerm.tolerado.ws.sfdc.Credential;
-import com.tgerm.tolerado.ws.sfdc.query.SFDCPartnerQuery;
+import com.tgerm.tolerado.ws.sfdc.query.ToleradoQuery;
 import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStub;
 import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStubRegistry;
 
@@ -41,8 +41,8 @@ import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStubRegistry;
  * @author abhinav
  * 
  */
-public class PartnerQuerySample {
-	private static Log log = LogFactory.getLog(PartnerQuerySample.class);
+public class QueryMoreSample {
+	private static Log log = LogFactory.getLog(QueryMoreSample.class);
 
 	public static void main(String[] args) throws Exception {
 		query(LoginCfg.self.getCredential());
@@ -51,8 +51,8 @@ public class PartnerQuerySample {
 	private static void query(Credential cred) throws Exception {
 		ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(cred);
 
-		SFDCPartnerQuery q = new SFDCPartnerQuery(pStub,
-				"Select Name from Contact", 400);
+		ToleradoQuery q = new ToleradoQuery(pStub, "Select Name from Contact",
+				400);
 		while (q.hasMoreRecords()) {
 			SObject[] records = q.getRecords();
 			log.debug("Fetched next " + records.length + " records !");
