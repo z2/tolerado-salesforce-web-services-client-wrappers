@@ -39,7 +39,7 @@ import com.sforce.soap._2006._08.apex.RunTestsResult;
 import com.sforce.soap._2006._08.apex.SessionHeader;
 import com.sforce.soap.partner.LoginResult;
 import com.tgerm.tolerado.exception.ToleradoException;
-import com.tgerm.tolerado.ws.sfdc.method.WSMethod;
+import com.tgerm.tolerado.ws.sfdc.method.WSRecoverableMethod;
 
 /**
  * @author abhinav
@@ -100,7 +100,7 @@ public class ToleradoApexStub extends ToleradoStub {
 	 * @return {@link RunTestsResult} Test results
 	 */
 	public RunTestsResult runTests(final RunTestsRequest runTestsRequest) {
-		RunTestsResult results = new WSMethod<RunTestsResult, ToleradoApexStub>("runTests") {
+		RunTestsResult results = new WSRecoverableMethod<RunTestsResult, ToleradoApexStub>("runTests") {
 			@Override
 			protected RunTestsResult invokeActual(ToleradoApexStub stub)
 					throws Exception {
@@ -116,7 +116,7 @@ public class ToleradoApexStub extends ToleradoStub {
 	 * @return {@link RunTestsResult} Test results
 	 */
 	public RunTestsResult runAllTests() {
-		return new WSMethod<RunTestsResult, ToleradoApexStub>("runTests") {
+		return new WSRecoverableMethod<RunTestsResult, ToleradoApexStub>("runTests") {
 			@Override
 			protected RunTestsResult invokeActual(ToleradoApexStub stub)
 					throws Exception {

@@ -50,7 +50,7 @@ import com.tgerm.tolerado.ws.sfdc.util.Util;
  * issues.
  * 
  * Child implementations can just extend this class and override the
- * {@link WSMethod#invokeActual(ToleradoStub)} method to do the real web service
+ * {@link WSRecoverableMethod#invokeActual(ToleradoStub)} method to do the real web service
  * method call via the correct Soap Stub. For ex.
  * 
  * <pre>
@@ -76,7 +76,7 @@ import com.tgerm.tolerado.ws.sfdc.util.Util;
  * @author abhinav
  * 
  */
-public abstract class WSMethod<R, S extends ToleradoStub> {
+public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	// this.getClass() used for accurate logging
 	private Log log = LogFactory.getLog(this.getClass());
 
@@ -84,7 +84,7 @@ public abstract class WSMethod<R, S extends ToleradoStub> {
 
 	private String methodName;
 
-	public WSMethod(String methodName) {
+	public WSRecoverableMethod(String methodName) {
 		super();
 		this.methodName = methodName;
 	}

@@ -36,7 +36,7 @@ import com.sforce.soap.partner.SforceServiceLocator;
 import com.sforce.soap.partner.SoapBindingStub;
 import com.sforce.soap.partner.sobject.SObject;
 import com.tgerm.tolerado.ws.sfdc.Credential;
-import com.tgerm.tolerado.ws.sfdc.method.WSMethod;
+import com.tgerm.tolerado.ws.sfdc.method.WSRecoverableMethod;
 
 /**
  * @author abhinav
@@ -97,7 +97,7 @@ public class ToleradoStub {
 	}
 
 	public QueryResult query(final String soql) {
-		return new WSMethod<QueryResult, ToleradoStub>("Query") {
+		return new WSRecoverableMethod<QueryResult, ToleradoStub>("Query") {
 			@Override
 			protected QueryResult invokeActual(ToleradoStub stub)
 					throws Exception {
@@ -108,7 +108,7 @@ public class ToleradoStub {
 	}
 
 	public QueryResult queryAll(final String soql) {
-		return new WSMethod<QueryResult, ToleradoStub>("QueryAll") {
+		return new WSRecoverableMethod<QueryResult, ToleradoStub>("QueryAll") {
 			@Override
 			protected QueryResult invokeActual(ToleradoStub stub)
 					throws Exception {
@@ -119,7 +119,7 @@ public class ToleradoStub {
 	}
 
 	public QueryResult queryMore(final String queryLocator) {
-		return new WSMethod<QueryResult, ToleradoStub>("QueryMore") {
+		return new WSRecoverableMethod<QueryResult, ToleradoStub>("QueryMore") {
 			@Override
 			protected QueryResult invokeActual(ToleradoStub stub)
 					throws Exception {
@@ -131,7 +131,7 @@ public class ToleradoStub {
 	}
 
 	public SaveResult[] create(final SObject[] sObjects) {
-		return new WSMethod<SaveResult[], ToleradoStub>("create") {
+		return new WSRecoverableMethod<SaveResult[], ToleradoStub>("create") {
 			@Override
 			protected SaveResult[] invokeActual(ToleradoStub stub)
 					throws Exception {
@@ -141,7 +141,7 @@ public class ToleradoStub {
 	}
 
 	public SaveResult[] update(final SObject[] sObjects) {
-		return new WSMethod<SaveResult[], ToleradoStub>("update") {
+		return new WSRecoverableMethod<SaveResult[], ToleradoStub>("update") {
 			@Override
 			protected SaveResult[] invokeActual(ToleradoStub stub)
 					throws Exception {
