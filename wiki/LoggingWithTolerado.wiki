@@ -7,7 +7,7 @@ Most of the times you won't need to enable logging for Tolerado. In case you are
 All the Tolerado framework classes are under "com.tgerm.tolerado" package. So use this package string to setup your logger.
 
 = Log4j logging sample = 
-I was using log4j for logging, so sharing the simple console logging setup I use inside Eclipse. You can copy the file contents below and create a log4j.properties file in classpath to see logging in action
+I was using log4j for logging, so I'm sharing the simple "DEBUG" console logging setup. I use this inside my Eclipse setup. You can copy the file contents below and create a log4j.properties file in classpath to see logging in action
 
 {{{
 log4j.rootLogger=ERROR, Console
@@ -22,4 +22,3 @@ log4j.appender.Console.layout=org.apache.log4j.PatternLayout
 log4j.appender.Console.layout.ConversionPattern=%5p [%t] (%F:%L) - %m%n
 
 }}}
-
