@@ -23,12 +23,36 @@ private void querySample() {
   try {
     // Assuming binding was created already via login
     qr = binding.query("select FirstName, LastName from Contact");
-    // do something with QueryResult here
+    // ... 
+    // process the results within QueryResult 
+    // ...
   }catch (Exception ex) {
+    // No recovery, just log the message.
     System.out.println("\nFailed to execute query successfully, error message was: \n" + 
                        ex.getMessage());
   }
 }
 }}}
 
-After using Tolerado stub 
+After using Tolerado stub, you will get something very similar. But many other stuff transparently. Check the code sample below.
+
+{{{
+
+// All the hassle of doing login and setting headers encapsulated in this single call
+// ToleradoStub is a ready to use stub, with no changes required
+ToleradoStub pStub = ToleradoStubRegistry
+		.getPartnerStub(new Credential("userName@user.com", "password"));
+//Binding created transparently from the given salesforce user name
+//password.
+//You transparently got the
+//1. Fault recovery mechanism
+//2. Cached stub (if its second call via the same login)
+//3. QueryResult is same class as before, so no change on your rest of the
+// logic.
+QueryResult qr = pStub.query("select FirstName, LastName from Contact");
+// ... 
+// process the results within QueryResult 
+// ...
+
+
+}}}
