@@ -30,9 +30,8 @@ package com.tgerm.tolerado.ws.sample.sfdc.partner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.sforce.soap.partner.sobject.SObject;
+import com.sforce.soap.partner.QueryResult;
 import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
-import com.tgerm.tolerado.axis14.partner.ToleradoQuery;
 import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.cfg.LoginCfg;
 import com.tgerm.tolerado.common.Credential;
@@ -41,22 +40,27 @@ import com.tgerm.tolerado.common.Credential;
  * @author abhinav
  * 
  */
-public class QueryMoreSample {
-	private static Log log = LogFactory.getLog(QueryMoreSample.class);
+public class QuerySample {
+	private static Log log = LogFactory.getLog(QuerySample.class);
 
-	public static void main(String[] args) throws Exception {
-		query(LoginCfg.self.getCredential());
+	public static void main(String[] args) {
+		Credential cred = LoginCfg.self.getCredential();
+		// All the hassle of doing login and setting headers encapsulated in
+		// this single call
+		// ToleradoStub is a ready to use stub, with no changes required
+		ToleradoStub pStub = ToleradoStubRegistry
+				.getPartnerStub(new Credential("userName@user.com", "password"));
+		// Binding created transparently from the given salesforce user name
+		// password.
+		// You transparently got the
+		// 1. Fault recovery mechanism
+		// 2. Cached stub (if its second call via the same login)
+		// 3. QueryResult is same class as before, so no change on your rest of
+		// the
+		// logic.
+		QueryResult qr = pStub.query("select FirstName, LastName from Contact");
+		// ...
+		// process the results within QueryResult
+		// ...
 	}
-
-	private static void query(Credential cred) throws Exception {
-		ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(cred);
-
-		ToleradoQuery q = new ToleradoQuery(pStub, "Select Name from Contact",
-				400);
-		while (q.hasMoreRecords()) {
-			SObject[] records = q.getRecords();
-			log.debug("Fetched next " + records.length + " records !");
-		}
-	}
-
 }

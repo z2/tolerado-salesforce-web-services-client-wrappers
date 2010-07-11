@@ -29,9 +29,9 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.ws.sample.sfdc.apex;
 
 import com.sforce.soap._2006._08.apex.RunTestsResult;
+import com.tgerm.tolerado.axis14.apex.ToleradoApexStub;
+import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
 import com.tgerm.tolerado.cfg.LoginCfg;
-import com.tgerm.tolerado.ws.sfdc.stub.ToleradoApexStub;
-import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStubRegistry;
 
 public class RunTestsSample {
 	public static void main(String[] args) {

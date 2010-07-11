@@ -32,8 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.tgerm.tolerado.exception.ToleradoException;
-import com.tgerm.tolerado.ws.sfdc.Credential;
+import com.tgerm.tolerado.common.Credential;
+import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * Login configuration management class. It loads the config from a file named
