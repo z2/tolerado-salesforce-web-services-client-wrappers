@@ -68,7 +68,7 @@ import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStub;
  * 
  * @author <a href="http://www.tgerm.com">abhinav</a>
  */
-public class SFDCPartnerQuery {
+public class ToleradoQuery {
 	/**
 	 * Batch size defaulted to 200
 	 */
@@ -87,7 +87,7 @@ public class SFDCPartnerQuery {
 	 * @param soql
 	 *            SOQL query string
 	 */
-	public SFDCPartnerQuery(ToleradoStub binding, String soql) {
+	public ToleradoQuery(ToleradoStub binding, String soql) {
 		this(binding, soql, DEFAULT_BATCH_SIZE);
 	}
 
@@ -102,7 +102,7 @@ public class SFDCPartnerQuery {
 	 * @param batchSize
 	 *            the new batch size for querying
 	 */
-	public SFDCPartnerQuery(ToleradoStub pStub, String soql,
+	public ToleradoQuery(ToleradoStub pStub, String soql,
 			int batchSize) {
 		super();
 		// Query can't fetch more then 500 records, so batch size should be less
