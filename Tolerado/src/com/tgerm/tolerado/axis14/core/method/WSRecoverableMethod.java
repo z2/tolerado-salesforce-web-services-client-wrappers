@@ -25,7 +25,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.tgerm.tolerado.ws.sfdc.method;
+package com.tgerm.tolerado.axis14.core.method;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,9 +36,9 @@ import org.apache.commons.logging.LogFactory;
 
 import com.sforce.soap.partner.fault.ApiFault;
 import com.sforce.soap.partner.fault.ExceptionCode;
-import com.tgerm.tolerado.exception.ToleradoException;
-import com.tgerm.tolerado.ws.sfdc.stub.ToleradoStub;
-import com.tgerm.tolerado.ws.sfdc.util.Util;
+import com.tgerm.tolerado.axis14.core.Util;
+import com.tgerm.tolerado.axis14.partner.ToleradoStub;
+import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * Instances of this class represents a single web service method. Those methods
