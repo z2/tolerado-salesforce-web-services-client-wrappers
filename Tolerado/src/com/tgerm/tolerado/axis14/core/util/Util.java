@@ -26,7 +26,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.axis14.core;
+package com.tgerm.tolerado.axis14.core.util;
 
 import javax.xml.namespace.QName;
 
