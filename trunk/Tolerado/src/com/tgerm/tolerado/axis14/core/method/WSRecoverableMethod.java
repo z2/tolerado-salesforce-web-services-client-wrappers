@@ -36,7 +36,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.sforce.soap.partner.fault.ApiFault;
 import com.sforce.soap.partner.fault.ExceptionCode;
-import com.tgerm.tolerado.axis14.core.Util;
+import com.tgerm.tolerado.axis14.core.util.Util;
 import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.common.ToleradoException;
 
