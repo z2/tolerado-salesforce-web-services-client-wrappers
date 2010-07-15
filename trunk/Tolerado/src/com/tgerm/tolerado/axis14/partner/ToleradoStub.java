@@ -51,6 +51,8 @@ import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
 import com.tgerm.tolerado.common.Credential;
 
 /**
+ * {@link ToleradoStub} for partner WSDL
+ * 
  * @author abhinav
  * 
  */
@@ -63,6 +65,10 @@ public class ToleradoStub {
 
 	}
 
+	/**
+	 * Gives the salesforce login result
+	 * 
+	 */
 	public LoginResult getLoginResult() {
 		return loginResult;
 	}
@@ -71,6 +77,9 @@ public class ToleradoStub {
 		this.loginResult = loginResult;
 	}
 
+	/**
+	 * @return The {@link SoapBindingStub} for partner wsdl
+	 */
 	public SoapBindingStub getPartnerBinding() {
 		return partnerBinding;
 	}
@@ -79,6 +88,10 @@ public class ToleradoStub {
 		this.partnerBinding = binding;
 	}
 
+	/**
+	 * 
+	 * @return The salesforce login {@link Credential} for this stub
+	 */
 	public Credential getCredential() {
 		return credential;
 	}
@@ -87,6 +100,9 @@ public class ToleradoStub {
 		this.credential = credential;
 	}
 
+	/**
+	 * Prepares this stub for next use, called internally by API
+	 */
 	public void prepare() {
 		partnerBinding._setProperty(SoapBindingStub.ENDPOINT_ADDRESS_PROPERTY,
 				loginResult.getServerUrl());
@@ -108,15 +124,23 @@ public class ToleradoStub {
 		this.loginResult = newStub.loginResult;
 	}
 
+	/**
+	 * Queries salesforce via SOQL
+	 * 
+	 * @param soql
+	 * @return
+	 */
 	public QueryResult query(final String soql) {
-		return new WSRecoverableMethod<QueryResult, ToleradoStub>("Query") {
+		WSRecoverableMethod<QueryResult, ToleradoStub> wsMethod = new WSRecoverableMethod<QueryResult, ToleradoStub>(
+				"Query") {
 			@Override
 			protected QueryResult invokeActual(ToleradoStub stub)
 					throws Exception {
 				QueryResult query = stub.getPartnerBinding().query(soql);
 				return query;
 			}
-		}.invoke(this);
+		};
+		return wsMethod.invoke(this);
 	}
 
 	public QueryResult queryAll(final String soql) {
