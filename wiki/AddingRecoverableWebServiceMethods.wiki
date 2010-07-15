@@ -10,7 +10,7 @@ At very basic to implement a new web service method using Tolerado you have to e
 
 WSRecoverableMethod is an Abstract web service method template, extending this class and implementing *protected abstract R invokeActual(S stub) throws Exception;* makes your implementation recoverable and stub caching.
 
-Here is a template of how to extend WSRecoverableMethod 
+== Template of how to extend WSRecoverableMethod ==
 
 {{{
 // Create a stub from Cached registry for the desired username/pass
@@ -19,7 +19,7 @@ ToleradoStub stub = ToleradoStubRegistry.getPartnerStub(new Credential("userName
 // Create an Java Anonymous class, implementing the WSRecoverableMethod 
 // First Generics Type Argument : "R" here is the result of actual web service call from salesforce apache axis stubs.
 // Second Generics Type Argument : "ToleradoStub" here is the Tolerado stub, that can be either of ToleradoStub, ToleradoApexStub or ToleradoMetaStub.
-WSRecoverableMethod<R, ToleradoStub> wsMethod = new WSRecoverableMethod<R, ToleradoStub>() {
+WSRecoverableMethod<R, ToleradoStub> wsMethod = new WSRecoverableMethod<R, ToleradoStub>("methodName") {
     // This method is the one where the actual Web Service call should be done via
     // Apache axis stubs. 
     @Override
@@ -38,4 +38,44 @@ R r = wsMethod.invoke(stub);
 }}}
 
 
+== Sample WSRecoverableMethod implementation for Partner - Query Web Service Method ==
+Code snippet below shows how to implement Query WS method. Don't think its big, 90% of the code is comments :)
 
+{{{
+static RunTestsResult runSelectiveTests(final String[] classes,
+        final String namespace, final String[] packages) {
+    // Stub for Apex WSDL, fetched from cached Registry
+    ToleradoApexStub stub = ToleradoStubRegistry
+            .getApexStub(new Credential("userName", "password"));
+    WSRecoverableMethod<RunTestsResult, ToleradoApexStub> wsRecoverableMethod = null;
+    // An Java Anonymous class, implementing the WSRecoverableMethod created
+    // First Generics Type Argument is the result of actual web service call
+    // i.e. RunTestsResult
+    // Second Generics Type Argument : "ToleradoApexStub" here is the
+    // Tolerado stub for Apex WSDL
+    // Note method name provided as "runTests" to the constructor
+    wsRecoverableMethod = new WSRecoverableMethod<RunTestsResult, ToleradoApexStub>(
+            "runTests") {
+        // Implementation done for the invokeActual, this is only required
+        // stuff. Note the return type of method should match the declared
+        // Generics type argument 1 above and the Stub argument should match
+        // similarly to the second argument
+        @Override
+        protected RunTestsResult invokeActual(ToleradoApexStub stub)
+                throws Exception {
+            boolean allTests = false;
+            RunTestsRequest runTestsRequest = new RunTestsRequest(allTests,
+                    classes, namespace, packages);
+            // Actual web service call done using this actual Apache Axis
+            // stubs
+            ApexBindingStub apexBinding = stub.getApexBinding();
+            // The actual web service method call
+            return apexBinding.runTests(runTestsRequest);
+            // Note no exception handling done here, as Tolerado will
+            // transparently take care of that
+        }
+    };
+    return wsRecoverableMethod.invoke(stub);
+}
+
+}}}
