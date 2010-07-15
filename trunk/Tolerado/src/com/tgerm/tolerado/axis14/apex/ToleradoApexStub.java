@@ -43,6 +43,9 @@ import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.common.ToleradoException;
 
 /**
+ * Stub for Apex WSDL, it does all the house keeping for session headers and
+ * keeping the stubs in correct state. Also exposes few WSDL methods for use
+ * 
  * @author abhinav
  * 
  */
@@ -63,7 +66,8 @@ public class ToleradoApexStub extends ToleradoStub {
 	}
 
 	/**
-	 * Prepares the apex binding
+	 * Prepares the apex binding, sets all the headers and housekeeping
+	 * required.
 	 */
 	public void prepareApex() {
 		try {
@@ -88,6 +92,11 @@ public class ToleradoApexStub extends ToleradoStub {
 				.getNamespaceURI(), "DebuggingHeader", dh);
 	}
 
+	/**
+	 * Returns handle to the actual {@link ApexBindingStub}
+	 * 
+	 * @return {@link ApexBindingStub}
+	 */
 	public ApexBindingStub getApexBinding() {
 		return apexBinding;
 	}
@@ -101,7 +110,8 @@ public class ToleradoApexStub extends ToleradoStub {
 	 * @return {@link RunTestsResult} Test results
 	 */
 	public RunTestsResult runTests(final RunTestsRequest runTestsRequest) {
-		RunTestsResult results = new WSRecoverableMethod<RunTestsResult, ToleradoApexStub>("runTests") {
+		RunTestsResult results = new WSRecoverableMethod<RunTestsResult, ToleradoApexStub>(
+				"runTests") {
 			@Override
 			protected RunTestsResult invokeActual(ToleradoApexStub stub)
 					throws Exception {
@@ -117,7 +127,8 @@ public class ToleradoApexStub extends ToleradoStub {
 	 * @return {@link RunTestsResult} Test results
 	 */
 	public RunTestsResult runAllTests() {
-		return new WSRecoverableMethod<RunTestsResult, ToleradoApexStub>("runTests") {
+		return new WSRecoverableMethod<RunTestsResult, ToleradoApexStub>(
+				"runTests") {
 			@Override
 			protected RunTestsResult invokeActual(ToleradoApexStub stub)
 					throws Exception {
