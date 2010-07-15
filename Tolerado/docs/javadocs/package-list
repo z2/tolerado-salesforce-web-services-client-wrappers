@@ -1,2 +1,9 @@
-com.tgerm.tolerado.ws
-com.tgerm.tolerado.ws.sfdc.query
+com.tgerm.tolerado.axis14.apex
+com.tgerm.tolerado.axis14.core
+com.tgerm.tolerado.axis14.core.method
+com.tgerm.tolerado.axis14.core.method.impl
+com.tgerm.tolerado.axis14.core.sobject
+com.tgerm.tolerado.axis14.core.util
+com.tgerm.tolerado.axis14.metadata
+com.tgerm.tolerado.axis14.partner
+com.tgerm.tolerado.common
