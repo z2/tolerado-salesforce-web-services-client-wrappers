@@ -79,3 +79,22 @@ ToleradoApexStub stub = ToleradoStubRegistry
 RunTestsResult runResult = aStub.runAllTests();
 System.out.println("All Test Failures : " + runResult.getNumFailures());
 }}}
+
+= Metadata WSDL- ToleradoMetaStub Code Sample =
+
+== Retrieve Request - Sample ==
+{{{
+// Note we called getMetaStub on the ToleradoStubRegistry
+// You saved all the hassle of creating Soap Stubs for partner login and then setting up
+// headers for Metadata Stub. 
+ToleradoMetaStub mStub = ToleradoStubRegistry.getMetaStub(cred);
+// Create the RetrieveRequest 
+RetrieveRequest retrieveRequest = new RetrieveRequest();
+retrieveRequest.setApiVersion(18.0);
+// Put your package name here
+retrieveRequest.setPackageNames(new String[] { "xyz" });
+retrieveRequest.setSinglePackage(true);
+// This call got the fault recovery and caching transparently.
+AsyncResult results = mStub.retrieve(retrieveRequest);
+
+}}}
