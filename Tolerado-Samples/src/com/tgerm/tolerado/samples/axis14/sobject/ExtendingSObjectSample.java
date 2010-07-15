@@ -45,14 +45,15 @@ import com.tgerm.tolerado.common.ToleradoException;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
- * Shows how to use {@link ToleradoSobject} for CRUD operations
+ * Shows how to use {@link ToleradoSobject} for CRUD operations using the
+ * {@link ContactSObject}
  * 
  * @author abhinav
  * 
  */
-public class SobjectUsageSample {
-	// Logger from - Apache commons logging 
-	private static Log log = LogFactory.getLog(SobjectUsageSample.class);
+public class ExtendingSObjectSample {
+	// Logger from - Apache commons logging
+	private static Log log = LogFactory.getLog(ExtendingSObjectSample.class);
 
 	public static void main(String[] args) {
 		// Create a Sobject first
@@ -95,12 +96,12 @@ public class SobjectUsageSample {
 		// Get the partner stub
 		ToleradoStub partnerStub = ToleradoStubRegistry
 				.getPartnerStub(LoginCfg.self.getCredential());
-		ToleradoSobject sobj = new ToleradoSobject("Contact");
-		sobj.setAttribute("FirstName", "Abhinav");
-		sobj.setAttribute("LastName", "Gupta");
-		log.debug("Created ToleradoSobject: " + sobj);
+		ContactSObject contact = new ContactSObject();
+		contact.setFirstName("Abhinav");
+		contact.setLastName("Gupta");
+		log.debug("Created ToleradoSobject: " + contact);
 		// Get the updated Sobejct
-		SObject updatedSObject = sobj.getUpdatedSObject();
+		SObject updatedSObject = contact.getUpdatedSObject();
 
 		SObject[] sObjects = new SObject[] { updatedSObject };
 		SaveResult[] saveResults = partnerStub.create(sObjects);
@@ -128,14 +129,14 @@ public class SobjectUsageSample {
 
 		SObject sobj = qr.getRecords(0);
 
-		ToleradoSobject tSobj = new ToleradoSobject(sobj);
+		ContactSObject contactSobj = new ContactSObject(sobj);
 		System.out.println("Queried Contact FirstName:"
-				+ tSobj.getTextValue("FirstName"));
+				+ contactSobj.getFirstName());
 		System.out.println("Queried Contact LastName:"
-				+ tSobj.getTextValue("LastName"));
+				+ contactSobj.getLastName());
 
-		tSobj.setAttribute("FirstName", "Abhinav2");
-		SObject updatedSObject = tSobj.getUpdatedSObject();
+		contactSobj.setFirstName("Abhinav2");
+		SObject updatedSObject = contactSobj.getUpdatedSObject();
 
 		SObject[] sObjects = new SObject[] { updatedSObject };
 		SaveResult[] saveResults = partnerStub.update(sObjects);
