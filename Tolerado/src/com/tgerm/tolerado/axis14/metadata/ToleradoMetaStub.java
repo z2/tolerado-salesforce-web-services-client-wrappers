@@ -42,6 +42,12 @@ import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
 import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.common.ToleradoException;
 
+/**
+ * {@link ToleradoStub} extension for salesforce metadata wsdl
+ * 
+ * @author abhinav
+ * 
+ */
 public class ToleradoMetaStub extends ToleradoStub {
 	private MetadataBindingStub binding;
 
@@ -55,6 +61,9 @@ public class ToleradoMetaStub extends ToleradoStub {
 
 	}
 
+	/**
+	 * Prepares the {@link MetadataBindingStub} for next use
+	 */
 	public void prepareMeta() {
 		try {
 			binding = (MetadataBindingStub) new MetadataServiceLocator()
@@ -76,6 +85,12 @@ public class ToleradoMetaStub extends ToleradoStub {
 				.getNamespaceURI(), "DebuggingHeader", dh);
 	}
 
+	/**
+	 * Retrieve metadata call wrapper
+	 * 
+	 * @param retrieveRequest
+	 * @return
+	 */
 	public AsyncResult retrieve(final RetrieveRequest retrieveRequest) {
 		WSRecoverableMethod<AsyncResult, ToleradoMetaStub> wsMethod = new WSRecoverableMethod<AsyncResult, ToleradoMetaStub>(
 				"retrieve") {
@@ -89,6 +104,11 @@ public class ToleradoMetaStub extends ToleradoStub {
 		return results;
 	}
 
+	/**
+	 * Gives handle to the internal {@link MetadataBindingStub}
+	 * 
+	 * @return {@link MetadataBindingStub}
+	 */
 	public MetadataBindingStub getMetaBinding() {
 		return binding;
 	}
