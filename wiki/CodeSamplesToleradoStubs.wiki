@@ -42,3 +42,26 @@ SObject[] sObjects = new SObject[] { updatedSObject };
 SaveResult[] saveResults = partnerStub.create(sObjects);
 
 }}}
+
+== Delete Sobject - Sample ==
+{{{
+
+static DeleteResult[] deleteSobject(final String[] idsToDelete) {
+    // Create a partner stub by giving your user name and password
+    ToleradoStub partnerStub = ToleradoStubRegistry
+            .getPartnerStub(new Credential("userName", "password"));
+    // Implemented the delete method on the fly for demo
+    WSRecoverableMethod<DeleteResult[], ToleradoStub> deleteMethod = new WSRecoverableMethod<DeleteResult[], ToleradoStub>(
+            "delete") {
+        @Override
+        protected DeleteResult[] invokeActual(ToleradoStub stub)
+                throws Exception {
+            return stub.getPartnerBinding().delete(idsToDelete);
+        }
+    };
+
+    DeleteResult[] results = deleteMethod.invoke(partnerStub);
+    return results;
+}
+
+}}}
