@@ -46,7 +46,7 @@ SaveResult[] saveResults = partnerStub.create(sObjects);
 == Delete Sobject - Sample ==
 {{{
 
-static DeleteResult[] deleteSobject(final String[] idsToDelete) {
+static DeleteResult[] deleteSobjects(final String[] idsToDelete) {
     // Create a partner stub by giving your user name and password
     ToleradoStub partnerStub = ToleradoStubRegistry
             .getPartnerStub(new Credential("userName", "password"));
