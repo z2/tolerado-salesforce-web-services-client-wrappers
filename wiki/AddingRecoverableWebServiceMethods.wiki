@@ -87,14 +87,38 @@ This code snippet shows how to make a Partner query call. Have added no comments
 {{{
 
 public QueryResult query(final String soql) {
-    return new WSRecoverableMethod<QueryResult, ToleradoStub>("Query") {
+    ToleradoApexStub stub = ToleradoStubRegistry
+            .getApexStub(new Credential("userName", "password"));   
+    WSRecoverableMethod<QueryResult, ToleradoStub> wsMethod = new WSRecoverableMethod<QueryResult, ToleradoStub>(
+            "Query") {
         @Override
         protected QueryResult invokeActual(ToleradoStub stub)
                 throws Exception {
             QueryResult query = stub.getPartnerBinding().query(soql);
             return query;
         }
-    }.invoke(this);
+    };
+    return wsMethod.invoke(stub);
 }
+}}}
 
+== Sample WSRecoverableMethod implementation for Metadata - Retrieve Call ==
+This code snippet shows how to make a Retrieve call from metadata wsdl. Again Have added no comments for simplicity  :)
+
+{{{
+public AsyncResult retrieve(final RetrieveRequest retrieveRequest)
+        throws Throwable {
+    ToleradoApexStub stub = ToleradoStubRegistry
+            .getApexStub(new Credential("userName", "password"));   
+    WSRecoverableMethod<AsyncResult, ToleradoMetaStub> wsMethod = new WSRecoverableMethod<AsyncResult, ToleradoMetaStub>(
+            "retrieve") {
+        @Override
+        protected AsyncResult invokeActual(ToleradoMetaStub stub)
+                throws Exception {
+            return stub.getMetaBinding().retrieve(retrieveRequest);
+        }
+    };
+    AsyncResult results = wsMethod.invoke(stub);
+    return results;
+}
 }}}
