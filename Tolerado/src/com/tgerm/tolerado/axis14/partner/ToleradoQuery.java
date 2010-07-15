@@ -55,7 +55,7 @@ import com.sforce.soap.partner.sobject.SObject;
  * <code>
  * 		// Assuming soapBinding is created correctly already.
  * 		String soql = 'select Id, Name from Contact';
- * 		SFDCPartnerQuery sf = new SFDCPartnerQuery(soapBinding, soql);
+ * 		ToleradoQuery sf = new ToleradoQuery(soapBinding, soql);
  * 		while (sf.hasMoreRecords()) {
  * 			SObject[] records = sf.getRecords();
  * 			// ....
