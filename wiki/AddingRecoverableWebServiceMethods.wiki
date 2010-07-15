@@ -1,0 +1,41 @@
+This post explains how to add new Web Service methods from partner, apex and metadata WSDLs that use the Tolerado fixture for error recovery and all other benefits.
+
+= Introduction =
+
+There are many web service methods in each partner, metadata and apex wsdls. So Tolerado haven’t created a method wrapper for each in ToleradoStub, ToleradoMetaStub and ToleradoApexStub. This is intentionally left because inheriting the power of fixture is too simple. 
+
+At very basic to implement a new web service method using Tolerado you have to extend WSRecoverableMethod<R, S extends ToleradoStub>, its an abstract class and expects you to provide implementation of following method. This is explained with examples below.
+
+= New WS Method and WSRecoverableMethod<R, S extends ToleradoStub> = 
+
+WSRecoverableMethod is an Abstract web service method template, extending this class and implementing *protected abstract R invokeActual(S stub) throws Exception;* makes your implementation recoverable and stub caching.
+
+Here is a template of how to extend WSRecoverableMethod 
+
+{{{
+// Create a stub from Cached registry for the desired username/pass
+ToleradoStub stub = ToleradoStubRegistry.getPartnerStub(new Credential("userName", "password"));
+
+// Create an Java Anonymous class, implementing the WSRecoverableMethod 
+// First Generics Type Argument : "R" here is the result of actual web service call from salesforce apache axis stubs.
+// Second Generics Type Argument : "ToleradoStub" here is the Tolerado stub, that can be either of ToleradoStub, ToleradoApexStub or ToleradoMetaStub.
+WSRecoverableMethod<R, ToleradoStub> wsMethod = new WSRecoverableMethod<R, ToleradoStub>() {
+    // This method is the one where the actual Web Service call should be done via
+    // Apache axis stubs. 
+    @Override
+    protected R invokeActual(ToleradoStub stub) throws Exception {
+        // use stub to do the actual call here
+        // one shouldn't try recovering or do any special exception handling
+        // here, as Tolerado fixture will do that transparently
+        // Return the web service call result "R"
+        return R;
+    }
+};
+// This is must to actually make the web service call. Calling "invoke" method below will trigger the Tolerado recovery and will do the "invokeActual" call transparently.
+// Note again "R" should be changed to the actual web service result.
+R r = wsMethod.invoke(stub);
+
+}}}
+
+
+
