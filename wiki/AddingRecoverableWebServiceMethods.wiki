@@ -39,7 +39,7 @@ R r = wsMethod.invoke(stub);
 }}}
 
 
-== Sample WSRecoverableMethod implementation for Apex - RunTests Call ==
+== Apex - RunTests Call -- Sample WSRecoverableMethod Impl ==
 Code snippet below shows how to implement Query WS method. Don't think its big, 90% of the code is comments :)
 
 {{{
@@ -81,7 +81,7 @@ static RunTestsResult runSelectiveTests(final String[] classes,
 
 }}}
 
-== Sample WSRecoverableMethod implementation for Partner - Query Call ==
+== Partner - Query Call -- Sample WSRecoverableMethod Impl ==
 This code snippet shows how to make a Partner query call. Have added no comments to show the simplicity of code now :)
 
 {{{
@@ -102,7 +102,7 @@ public QueryResult query(final String soql) {
 }
 }}}
 
-== Sample WSRecoverableMethod implementation for Metadata - Retrieve Call ==
+== Metadata - Retrieve Call -- Sample WSRecoverableMethod Impl ==
 This code snippet shows how to make a Retrieve call from metadata wsdl. Again Have added no comments for simplicity  :)
 
 {{{
