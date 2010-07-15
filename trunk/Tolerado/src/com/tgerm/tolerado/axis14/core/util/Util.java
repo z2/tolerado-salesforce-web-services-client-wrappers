@@ -45,6 +45,11 @@ import com.tgerm.tolerado.common.ToleradoException;
  * 
  */
 public class Util {
+	/**
+	 * Parses the {@link AxisFault} for fault code.
+	 * @param af {@link AxisFault} 
+	 * @return Parsed fault code
+	 */
 	public static String faultCodeFromAxisFault(AxisFault af) {
 		QName faultCode = af.getFaultCode();
 		if (faultCode != null && StringUtils.isBlank(faultCode.getLocalPart())) {
