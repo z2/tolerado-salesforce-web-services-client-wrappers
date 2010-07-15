@@ -31,7 +31,7 @@ package com.tgerm.tolerado.ws.sample.sfdc.apex;
 import com.sforce.soap._2006._08.apex.RunTestsResult;
 import com.tgerm.tolerado.axis14.apex.ToleradoApexStub;
 import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
-import com.tgerm.tolerado.cfg.LoginCfg;
+import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 public class RunTestsSample {
 	public static void main(String[] args) {

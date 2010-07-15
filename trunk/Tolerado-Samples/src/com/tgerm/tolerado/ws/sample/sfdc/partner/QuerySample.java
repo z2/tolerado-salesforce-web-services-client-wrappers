@@ -33,8 +33,8 @@ import org.apache.commons.logging.LogFactory;
 import com.sforce.soap.partner.QueryResult;
 import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
 import com.tgerm.tolerado.axis14.partner.ToleradoStub;
-import com.tgerm.tolerado.cfg.LoginCfg;
 import com.tgerm.tolerado.common.Credential;
+import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
  * @author abhinav
