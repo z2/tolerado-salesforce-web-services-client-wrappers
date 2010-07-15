@@ -25,7 +25,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.tgerm.tolerado.samples.axis14.stub.partner;
+package com.tgerm.tolerado.samples.axis14.query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,22 +34,20 @@ import com.sforce.soap.partner.sobject.SObject;
 import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
 import com.tgerm.tolerado.axis14.partner.ToleradoQuery;
 import com.tgerm.tolerado.axis14.partner.ToleradoStub;
-import com.tgerm.tolerado.common.Credential;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
+ * Shows how to use {@link ToleradoQuery} for doing queryMore or query calls
+ * 
  * @author abhinav
  * 
  */
-public class QueryMoreSample {
-	private static Log log = LogFactory.getLog(QueryMoreSample.class);
+public class ToleradoQuerySample {
+	private static Log log = LogFactory.getLog(ToleradoQuerySample.class);
 
 	public static void main(String[] args) throws Exception {
-		query(LoginCfg.self.getCredential());
-	}
-
-	private static void query(Credential cred) throws Exception {
-		ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(cred);
+		ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(LoginCfg.self
+				.getCredential());
 
 		ToleradoQuery q = new ToleradoQuery(pStub, "Select Name from Contact",
 				400);

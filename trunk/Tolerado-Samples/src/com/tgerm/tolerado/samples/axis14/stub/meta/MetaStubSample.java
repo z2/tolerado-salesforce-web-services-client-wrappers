@@ -25,38 +25,34 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.tgerm.tolerado.samples.axis14.stub.partner;
 
-import com.sforce.soap.partner.QueryResult;
+package com.tgerm.tolerado.samples.axis14.stub.meta;
+
+import com.sforce.soap._2006._04.metadata.AsyncResult;
+import com.sforce.soap._2006._04.metadata.RetrieveRequest;
 import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
-import com.tgerm.tolerado.axis14.partner.ToleradoStub;
-import com.tgerm.tolerado.common.Credential;
+import com.tgerm.tolerado.axis14.metadata.ToleradoMetaStub;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
+ * Shows how to use {@link ToleradoMetaStub} for Metadata WSDL Calls
+ * 
  * @author abhinav
  * 
  */
-public class QuerySample {
-
+public class MetaStubSample {
 	public static void main(String[] args) {
-		Credential cred = LoginCfg.self.getCredential();
-		// All the hassle of doing login and setting headers encapsulated in
-		// this single call
-		// ToleradoStub is a ready to use stub, with no changes required
-		ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(cred);
-		// Binding created transparently from the given salesforce user name
-		// password.
-		// You transparently got the
-		// 1. Fault recovery mechanism
-		// 2. Cached stub (if its second call via the same login)
-		// 3. QueryResult is same class as before, so no change on your rest of
-		// the
-		// logic.
-		QueryResult qr = pStub.query("select FirstName, LastName from Contact");
-		// ...
-		// process the results within QueryResult
-		// ...
-		System.out.println("Result Size: " + qr.getSize());
+		// Note we created a ToleradoMetaStub here
+		ToleradoMetaStub mStub = ToleradoStubRegistry.getMetaStub(LoginCfg.self
+				.getCredential());
+		RetrieveRequest retrieveRequest = new RetrieveRequest();
+		retrieveRequest.setApiVersion(18.0);
+		// Put your package name here
+		String packageName = "<Your Package Name Goes here>";
+		retrieveRequest.setPackageNames(new String[] { packageName });
+		retrieveRequest.setSinglePackage(true);
+		AsyncResult results = mStub.retrieve(retrieveRequest);
+		System.out.println(" DONOE ? : " + results.isDone());
 	}
+
 }
