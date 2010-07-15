@@ -1,3 +1,4 @@
+#labels Featured
 As of now this project is wrapping stubs generated via Apache Axis 1.4. Later we will try to address other WSDL2Java generators. So this guide is for you if you are using or planning for Apache Axis 1.4.
 
 = Getting Started with TOLERADO =
@@ -19,4 +20,3 @@ Once you have all the prerequisites set in your classpath. Code samples for Tole
 
 == Running Samples via the Tolerado Samples Project ==
 Tolerado Samples is a complete Java project independent of Tolerado main development branch. Its checked into SVN as java project, so you guys can checkout it from [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/#svn/trunk/Tolerado-Samples here] and start playing with samples
-
