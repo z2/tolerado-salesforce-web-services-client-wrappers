@@ -5,19 +5,16 @@ ToleradoStubs are meant to provide transparent fault tolerance, caching and hous
 
 == Querying Records - Sample ==
 {{{
-// All the hassle of doing login and setting headers encapsulated in
-// this single call
+// All the hassle of doing login and setting headers encapsulated in this single call
 // ToleradoStub is a ready to use stub, with no changes required
 ToleradoStub pStub = ToleradoStubRegistry
-        .getPartnerStub(new Credential(&quot;userName@user.com&quot;, &quot;password&quot;));
-// Binding created transparently from the given salesforce user name
-// password.
+        .getPartnerStub(new Credential("userName", "password"));
+// Binding created transparently from the given salesforce user name password.
 // You transparently got the
 // 1. Fault recovery mechanism
 // 2. Cached stub (if its second call via the same login)
 // 3. QueryResult is same class as before, so no change on your rest of
-// the
-// logic.
+// the logic.
 QueryResult qr = pStub.query(&quot;select FirstName, LastName from Contact&quot;);
 // ...
 // process the results within QueryResult
