@@ -1,5 +1,5 @@
 #labels Code-Sample
-This page shows code samples about the ToleradoSObject. Tolerado SObject simplifies the life, by avoid all hassles in using Apache Axis MessageElement/SOject.
+This page shows code samples about the ToleradoSObject. Tolerado SObject simplifies the life, by avoid all hassles in using Apache Axis MessageElement or SOject.
 
 = Code Samples =
 == Create new Sobject - Sample ==
