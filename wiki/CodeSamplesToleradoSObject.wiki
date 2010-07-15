@@ -31,7 +31,7 @@ SaveResult[] saveResults = partnerStub.create(sObjects);
 String sObjectId = "<Contact Id>";
 ToleradoStub partnerStub = ToleradoStubRegistry.getPartnerStub(new Credential("userName", "password"));
 // Do normal Soql Call
-QueryResult qr = partnerStub.query("Select FirstName, LastName from Contact where id = '" + sObjectId + "'");
+QueryResult qr = partnerStub.query("Select Id, FirstName, LastName from Contact where id = '" + sObjectId + "'");
 if (ArrayUtils.isEmpty(qr.getRecords())) {
     throw new ToleradoException("Failed to query the desired Sobject");
 }
