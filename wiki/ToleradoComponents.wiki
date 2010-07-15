@@ -12,7 +12,7 @@ Tolerado has 3 high level components.
 
 We are providing ToleradoStub implementation for 3 salesforce WSDLs i.e. partner, apex and metadata. More details below
 
-|| WSDL || Tolerado Stub || Code || Java Docs ||
+|| *WSDL* || *Tolerado Stub* || *Code* || *Java Docs* ||
 || partner.wsdl || ToleradoStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/partner/ToleradoStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/partner/ToleradoStub.html here] ||
 || metadata.wsdl || ToleradoMetaStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/metadata/ToleradoMetaStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/metadata/ToleradoMetaStub.html here] ||
 || apex.wsdl || ToleradoApexStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/apex/ToleradoApexStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/apex/ToleradoApexStub.html here] ||
