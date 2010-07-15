@@ -30,12 +30,15 @@ package com.tgerm.tolerado.axis14.metadata;
 
 import javax.xml.rpc.ServiceException;
 
+import com.sforce.soap._2006._04.metadata.AsyncResult;
 import com.sforce.soap._2006._04.metadata.DebuggingHeader;
 import com.sforce.soap._2006._04.metadata.LogType;
 import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
 import com.sforce.soap._2006._04.metadata.MetadataServiceLocator;
+import com.sforce.soap._2006._04.metadata.RetrieveRequest;
 import com.sforce.soap._2006._04.metadata.SessionHeader;
 import com.sforce.soap.partner.LoginResult;
+import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
 import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.common.ToleradoException;
 
@@ -71,6 +74,23 @@ public class ToleradoMetaStub extends ToleradoStub {
 		dh.setDebugLevel(LogType.Profiling);
 		binding.setHeader(new MetadataServiceLocator().getServiceName()
 				.getNamespaceURI(), "DebuggingHeader", dh);
+	}
+
+	public AsyncResult retrieve(final RetrieveRequest retrieveRequest)
+			throws Throwable {
+		AsyncResult results = new WSRecoverableMethod<AsyncResult, ToleradoMetaStub>(
+				"retrieve") {
+			@Override
+			protected AsyncResult invokeActual(ToleradoMetaStub stub)
+					throws Exception {
+				return stub.getMetaBinding().retrieve(retrieveRequest);
+			}
+		}.invoke(this);
+		return results;
+	}
+
+	public MetadataBindingStub getMetaBinding() {
+		return binding;
 	}
 
 }
