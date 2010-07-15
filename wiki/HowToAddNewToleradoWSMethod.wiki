@@ -5,7 +5,7 @@ This post explains how to add new Web Service methods from partner, apex and met
 
 There are many web service methods in each partner, metadata and apex wsdls. So Tolerado haven’t created a method wrapper for each in ToleradoStub, ToleradoMetaStub and ToleradoApexStub. This is intentionally left because inheriting the power of fixture is too simple. 
 
-At very basic to implement a new web service method using Tolerado you have to extend WSRecoverableMethod<R, S extends ToleradoStub>, its an abstract class and expects you to provide implementation of following method. This is explained with examples below.
+At very basic to implement a new web service method using Tolerado you have to extend [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/core/method/WSRecoverableMethod.html WSRecoverableMethod<R, S extends ToleradoStub>], its an abstract class and expects you to provide implementation of following method. This is explained with examples below.
 
 = New WS Method and WSRecoverableMethod<R, S extends ToleradoStub> = 
 
