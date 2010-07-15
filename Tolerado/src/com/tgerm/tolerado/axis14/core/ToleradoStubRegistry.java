@@ -41,6 +41,15 @@ import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.common.Credential;
 
 /**
+ * A central registry/cache for {@link ToleradoStub}, {@link ToleradoMetaStub}
+ * and {@link ToleradoApexStub}. This class gives methods like
+ * {@link ToleradoStubRegistry#getPartnerStub(Credential)} to quickly get either
+ * a cached or first time logged in Tolerado Stub impl.
+ * 
+ * In case one don't want cached stub and want to force login, then call this
+ * one {@link ToleradoStubRegistry#getPartnerStub(Credential, boolean)} with
+ * last boolean param as true
+ * 
  * @author abhinav
  * 
  */
@@ -50,11 +59,15 @@ public class ToleradoStubRegistry {
 	private static Map<Credential, ToleradoStub> cache = new HashMap<Credential, ToleradoStub>();
 
 	/**
-	 * Returns the correct stub for the given {@link ToleradoStub} class
+	 * Returns the correct stub for the given {@link ToleradoStub} class. Not
+	 * really meant for public use, its used more internall by the API
 	 * 
 	 * @param credential
+	 *            The Salesforce Login credentials
 	 * @param stubClass
-	 * @return
+	 *            the {@link ToleradoStub} or its child class
+	 * @return The ready to use {@link ToleradoStub} or its child class
+	 *         polymorpically
 	 */
 	public static ToleradoStub getStub(Credential credential,
 			Class<? extends ToleradoStub> stubClass) {
@@ -63,6 +76,20 @@ public class ToleradoStubRegistry {
 		return getStub(credential, forceLogin, stubClass);
 	}
 
+	/**
+	 * Returns the correct stub for the given {@link ToleradoStub} class. Not
+	 * really meant for public use, its used more internall by the API
+	 * 
+	 * @param credential
+	 *            The Salesforce Login credentials
+	 * @param forceLogin
+	 *            If true, login is enforced i.e. cached stub will no more be
+	 *            returned
+	 * @param stubClass
+	 *            the {@link ToleradoStub} or its child class
+	 * @return The ready to use {@link ToleradoStub} or its child class
+	 *         polymorpically
+	 */
 	public static ToleradoStub getStub(Credential credential,
 			boolean forceLogin, Class<? extends ToleradoStub> stubClass) {
 		if (forceLogin) {
@@ -72,19 +99,53 @@ public class ToleradoStubRegistry {
 		}
 	}
 
+	/**
+	 * Returns the stub for Partner WSDL
+	 * 
+	 * @param credential
+	 *            The Salesforce Login credentials
+	 * @return The ready to use {@link ToleradoStub} for Partner WSDL
+	 */
 	public static ToleradoStub getPartnerStub(Credential cred) {
 		return getApexStub(cred, false);
 	}
 
+	/**
+	 * Returns the stub for Partner WSDL
+	 * 
+	 * @param credential
+	 *            The Salesforce Login credentials
+	 * @param forceLogin
+	 *            If true, login is enforced i.e. cached stub will no more be
+	 *            returned
+	 * @return The ready to use {@link ToleradoStub} for Partner WSDL
+	 */
 	public static ToleradoStub getPartnerStub(Credential cred,
 			boolean forceLogin) {
 		return getStub(cred, forceLogin, ToleradoStub.class);
 	}
 
+	/**
+	 * Returns the stub for Apex WSDL
+	 * 
+	 * @param credential
+	 *            The Salesforce Login credentials
+	 * @return The ready to use {@link ToleradoApexStub} for Apex WSDL
+	 */
 	public static ToleradoApexStub getApexStub(Credential cred) {
 		return getApexStub(cred, false);
 	}
 
+	/**
+	 * Returns the stub for Apex WSDL
+	 * 
+	 * @param credential
+	 *            The Salesforce Login credentials
+	 * @param forceLogin
+	 *            If true, login is enforced i.e. cached stub will no more be
+	 *            returned
+	 * @return The ready to use {@link ToleradoApexStub} for Apex WSDL
+	 */
 	public static ToleradoApexStub getApexStub(Credential cred,
 			boolean forceLogin) {
 		ToleradoApexStub stb = (ToleradoApexStub) getStub(cred, forceLogin,
@@ -93,10 +154,27 @@ public class ToleradoStubRegistry {
 		return stb;
 	}
 
+	/**
+	 * Returns the stub for Metadata WSDL
+	 * 
+	 * @param credential
+	 *            The Salesforce Login credentials
+	 * @return The ready to use {@link ToleradoMetaStub} for Metadata WSDL
+	 */
 	public static ToleradoMetaStub getMetaStub(Credential cred) {
 		return getMetaStub(cred, false);
 	}
 
+	/**
+	 * Returns the stub for Metadata WSDL
+	 * 
+	 * @param credential
+	 *            The Salesforce Login credentials
+	 * @param forceLogin
+	 *            If true, login is enforced i.e. cached stub will no more be
+	 *            returned
+	 * @return The ready to use {@link ToleradoMetaStub} for Metadata WSDL
+	 */
 	public static ToleradoMetaStub getMetaStub(Credential cred,
 			boolean forceLogin) {
 		ToleradoMetaStub stb = (ToleradoMetaStub) getStub(cred, forceLogin,

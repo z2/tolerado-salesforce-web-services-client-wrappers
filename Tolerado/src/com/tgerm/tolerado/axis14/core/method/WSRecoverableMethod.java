@@ -50,15 +50,15 @@ import com.tgerm.tolerado.common.ToleradoException;
  * issues.
  * 
  * Child implementations can just extend this class and override the
- * {@link WSRecoverableMethod#invokeActual(ToleradoStub)} method to do the real web service
- * method call via the correct Soap Stub. For ex.
+ * {@link WSRecoverableMethod#invokeActual(ToleradoStub)} method to do the real
+ * web service method call via the correct Soap Stub. For ex.
  * 
  * <pre>
  * 
  * Credential cred = new Credential(&quot;&lt;your login name&gt;&quot;, &quot;&lt;your pass&gt;&quot;);
  * ToleradoApexStub apexStub = ToleradoStubRegistry.getApexStub(cred);
  * 
- * RunTestsResult results = new WSMethod&lt;RunTestsResult, ToleradoApexStub&gt;(
+ * RunTestsResult results = new WSRecoverableMethod&lt;RunTestsResult, ToleradoApexStub&gt;(
  * 		&quot;runTests&quot;) {
  * 
  * 	&#064;Override
@@ -79,7 +79,7 @@ import com.tgerm.tolerado.common.ToleradoException;
 public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	// this.getClass() used for accurate logging
 	private Log log = LogFactory.getLog(this.getClass());
-
+	// how many retries are done
 	protected int retries;
 
 	private String methodName;
@@ -154,7 +154,8 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	protected abstract R invokeActual(S stub) throws Exception;
 
 	/**
-	 * Will be called on Retryable failure
+	 * Will be called on Retryable failure to give a pause and retry. Child
+	 * implemenations may override this if required any change to this behavior
 	 */
 	protected void waitBeforeNextRetry() {
 		try {
@@ -168,6 +169,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * Returns true if the Exception is coming because of Login expiration.
 	 * 
 	 * @param ex
+	 *            Exception thrown by Salesforce for the failure
 	 * @return
 	 */
 	protected boolean isLoginExpired(Exception t) {
@@ -192,6 +194,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * Renews the user's session, if login was previously expired
 	 * 
 	 * @param stub
+	 *            The {@link ToleradoStub} instance
 	 */
 	protected void reLogin(S stub) {
 		if (stub != null)
@@ -212,6 +215,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * Returns true if this Exception can be retried
 	 * 
 	 * @param ex
+	 *            Exception thrown by Salesforce
 	 * @return
 	 */
 	protected boolean canRetry(Exception t) {

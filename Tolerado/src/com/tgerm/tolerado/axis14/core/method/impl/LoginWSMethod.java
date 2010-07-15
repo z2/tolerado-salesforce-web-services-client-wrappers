@@ -40,6 +40,8 @@ import com.tgerm.tolerado.common.Credential;
 import com.tgerm.tolerado.common.ToleradoException;
 
 /**
+ * Extends {@link WSRecoverableMethod} to implement salesforce login call
+ * 
  * @author abhinav
  * 
  */
@@ -70,8 +72,7 @@ public class LoginWSMethod extends
 	}
 
 	@Override
-	protected ToleradoStub invokeActual(ToleradoStub stub)
-			throws Exception {
+	protected ToleradoStub invokeActual(ToleradoStub stub) throws Exception {
 		SoapBindingStub binding;
 		try {
 			binding = (SoapBindingStub) new SforceServiceLocator().getSoap();

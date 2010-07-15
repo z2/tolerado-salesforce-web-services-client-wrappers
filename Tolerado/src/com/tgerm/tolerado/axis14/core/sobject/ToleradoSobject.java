@@ -29,10 +29,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.axis14.core.sobject;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.axis.message.MessageElement;
@@ -139,6 +137,17 @@ public class ToleradoSobject {
 		msgElementCache.put(attribName, updatedMsgElem);
 	}
 
+	/**
+	 * Returns nested {@link SObject} for the given relationship name
+	 * 
+	 * For ex. if Contact has lookup to Account and relationship name is
+	 * "Account", then this call should return the Sobject carrying Account
+	 * stuff
+	 * 
+	 * @param name
+	 *            relationship for which {@link SObject} should be returned
+	 * @return parsed Nested {@link SObject} instance
+	 */
 	public SObject getNestedSObject(String name) {
 		MessageElement messageElement = msgElementCache.get(name);
 		return SObjectUtil.parseNestedSObj(messageElement);
@@ -148,19 +157,6 @@ public class ToleradoSobject {
 		SObject parentObj = getNestedSObject(parent);
 		return parentObj != null ? SObjectUtil.parseText(parentObj.get_any(),
 				childName) : null;
-	}
-
-	public List<SObject> getChildrens(String childRelationshipName) {
-		MessageElement relationElement = msgElementCache
-				.get(childRelationshipName);
-		List<MessageElement> children = relationElement.getChildren();
-		List<SObject> sObjects = new ArrayList<SObject>();
-		for (MessageElement m : children) {
-			SObject nestedSObject = SObjectUtil.parseNestedSObj(m);
-			if (nestedSObject != null)
-				sObjects.add(nestedSObject);
-		}
-		return sObjects;
 	}
 
 	/**
