@@ -15,8 +15,25 @@ ToleradoStub pStub = ToleradoStubRegistry
 // 2. Cached stub (if its second call via the same login)
 // 3. QueryResult is same class as before, so no change on your rest of
 // the logic.
-QueryResult qr = pStub.query(&quot;select FirstName, LastName from Contact&quot;);
+QueryResult qr = pStub.query("select FirstName, LastName from Contact");
 // ...
 // process the results within QueryResult
 // ...
+}}}
+
+
+== Creating SObjects - Sample ==
+{{{
+ToleradoStub partnerStub = ToleradoStubRegistry
+        .getPartnerStub(new Credential("userName", "password"));
+// ToleradoSobject used for avoiding hassles with Messageelements
+ToleradoSobject sobj = new ToleradoSobject("Contact");
+sobj.setAttribute("FirstName", "Abhinav");
+sobj.setAttribute("LastName", "Gupta");
+// Get the updated Sobejct
+SObject updatedSObject = sobj.getUpdatedSObject();
+SObject[] sObjects = new SObject[] { updatedSObject };
+// This call transparently gets fault recovery 
+// SaveResult is same standard Apache Axis 1.4 class.
+SaveResult[] saveResults = partnerStub.create(sObjects);
 }}}
