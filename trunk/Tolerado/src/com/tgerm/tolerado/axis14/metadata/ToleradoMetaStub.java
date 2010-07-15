@@ -76,16 +76,16 @@ public class ToleradoMetaStub extends ToleradoStub {
 				.getNamespaceURI(), "DebuggingHeader", dh);
 	}
 
-	public AsyncResult retrieve(final RetrieveRequest retrieveRequest)
-			throws Throwable {
-		AsyncResult results = new WSRecoverableMethod<AsyncResult, ToleradoMetaStub>(
+	public AsyncResult retrieve(final RetrieveRequest retrieveRequest) {
+		WSRecoverableMethod<AsyncResult, ToleradoMetaStub> wsMethod = new WSRecoverableMethod<AsyncResult, ToleradoMetaStub>(
 				"retrieve") {
 			@Override
 			protected AsyncResult invokeActual(ToleradoMetaStub stub)
 					throws Exception {
 				return stub.getMetaBinding().retrieve(retrieveRequest);
 			}
-		}.invoke(this);
+		};
+		AsyncResult results = wsMethod.invoke(this);
 		return results;
 	}
 
