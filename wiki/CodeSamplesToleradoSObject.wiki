@@ -1,0 +1,58 @@
+#labels Code-Sample
+This page shows code samples about the ToleradoSObject. Tolerado SObject simplifies the life, by avoid all hassles in using Apache Axis MessageElement/SOject.
+
+= Code Samples =
+== Create new Sobject - Sample ==
+{{{
+
+
+// Create new Sobject by just passing in the SobjectType
+ToleradoSobject sobj = new ToleradoSobject("Contact");
+// use setAttribute() method to set values for any Sobject fields
+sobj.setAttribute("FirstName", "Abhinav");
+sobj.setAttribute("LastName", "Gupta");
+
+// Once you are done with updates fetch the updated Sobejct
+SObject updatedSObject = sobj.getUpdatedSObject();
+SObject[] sObjects = new SObject[] { updatedSObject };
+
+// Partner Stub will be needed when working with ToleradoSobject
+ToleradoStub partnerStub = ToleradoStubRegistry.getPartnerStub(new Credential("userName", "password"));
+// Call the create via the Same Partner Stub
+// SaveResult is the same Apache Axis class we all know
+SaveResult[] saveResults = partnerStub.create(sObjects);
+
+}}}
+
+== Query/Update SObject - Sample ==
+
+{{{
+// replace it with your contact sobject's id
+String sObjectId = "<Contact Id>";
+ToleradoStub partnerStub = ToleradoStubRegistry.getPartnerStub(new Credential("userName", "password"));
+// Do normal Soql Call
+QueryResult qr = partnerStub.query("Select FirstName, LastName from Contact where id = '" + sObjectId + "'");
+if (ArrayUtils.isEmpty(qr.getRecords())) {
+    throw new ToleradoException("Failed to query the desired Sobject");
+}
+
+SObject sobj = qr.getRecords(0);
+// QUERY Sobject
+
+// To get the ToleradoSobject, just wrap the newly fetched Sobject as shown below.
+ToleradoSobject tSobj = new ToleradoSobject(sobj);
+// See the ease by which you can query the fields like FirstName and LastName
+System.out.println("FirstName:" + tSobj.getTextValue("FirstName"));
+System.out.println("LastName:" + tSobj.getTextValue("LastName"));
+
+// UPDATION of Sobject
+
+// Simply call the setAttribute to update the desired fields
+tSobj.setAttribute("FirstName", "Abhinav2");
+// Get the updated Apache Axis Sobject back
+SObject updatedSObject = tSobj.getUpdatedSObject();
+SObject[] sObjects = new SObject[] { updatedSObject };
+// Use the Tolerado partner stub's update call 
+// SaveResult is again the same ApacheAxis class we know
+SaveResult[] saveResults = partnerStub.update(sObjects);
+}}}
