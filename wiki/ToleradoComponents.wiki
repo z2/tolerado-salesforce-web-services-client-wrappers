@@ -1,4 +1,3 @@
-#labels Featured
 This page explains about various components of Tolerado
 
 = Introduction =
