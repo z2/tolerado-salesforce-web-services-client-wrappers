@@ -95,6 +95,7 @@ retrieveRequest.setApiVersion(18.0);
 retrieveRequest.setPackageNames(new String[] { "xyz" });
 retrieveRequest.setSinglePackage(true);
 // This call got the fault recovery and caching transparently.
+// AsyncResult is the same Apache Axis class you all know
 AsyncResult results = mStub.retrieve(retrieveRequest);
 
 }}}
