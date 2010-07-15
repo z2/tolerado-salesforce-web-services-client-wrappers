@@ -29,6 +29,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.common;
 
 /**
+ * Salesforce login credentials
+ * 
  * @author abhinav
  * 
  */
