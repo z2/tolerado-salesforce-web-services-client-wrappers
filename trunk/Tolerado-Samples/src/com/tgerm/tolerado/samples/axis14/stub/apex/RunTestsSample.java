@@ -31,6 +31,7 @@ package com.tgerm.tolerado.samples.axis14.stub.apex;
 import com.sforce.soap._2006._08.apex.RunTestsResult;
 import com.tgerm.tolerado.axis14.apex.ToleradoApexStub;
 import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
+import com.tgerm.tolerado.common.Credential;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
@@ -43,8 +44,9 @@ public class RunTestsSample {
 	// Shows how to run all tests using the Apex WSDL ..
 	public static void main(String[] args) {
 		// Create a ToleradoApexStub
-		ToleradoApexStub aStub = ToleradoStubRegistry.getApexStub(LoginCfg.self
-				.getCredential());
+		Credential credential = LoginCfg.self.getCredential();
+		// Create stub
+		ToleradoApexStub aStub = ToleradoStubRegistry.getApexStub(credential);
 		// This call does the rest
 		RunTestsResult runResult = aStub.runAllTests();
 		System.out.println("All Test Failures : " + runResult.getNumFailures());
