@@ -28,6 +28,17 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.tgerm.tolerado.axis14.partner;
 
+import com.sforce.soap.partner.DataCategoryGroupSobjectTypePair;
+import com.sforce.soap.partner.DeleteResult;
+import com.sforce.soap.partner.DescribeDataCategoryGroupResult;
+import com.sforce.soap.partner.DescribeDataCategoryGroupStructureResult;
+import com.sforce.soap.partner.DescribeGlobalResult;
+import com.sforce.soap.partner.DescribeLayoutResult;
+import com.sforce.soap.partner.DescribeSObjectResult;
+import com.sforce.soap.partner.DescribeSoftphoneLayoutResult;
+import com.sforce.soap.partner.DescribeTabSetResult;
+import com.sforce.soap.partner.LeadConvert;
+import com.sforce.soap.partner.LeadConvertResult;
 import com.sforce.soap.partner.LoginResult;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SaveResult;
@@ -127,6 +138,136 @@ public class ToleradoStub {
 				QueryResult query = stub.getPartnerBinding().queryMore(
 						queryLocator);
 				return query;
+			}
+		}.invoke(this);
+	}
+
+	public LeadConvertResult[] convertLead(final LeadConvert[] leadConverts) {
+		return new WSRecoverableMethod<LeadConvertResult[], ToleradoStub>(
+				"convertLead") {
+			@Override
+			protected LeadConvertResult[] invokeActual(ToleradoStub stub)
+					throws Exception {
+				LeadConvertResult[] results = stub.getPartnerBinding()
+						.convertLead(leadConverts);
+				return results;
+			}
+		}.invoke(this);
+	}
+
+	public DeleteResult[] delete(final String[] ids) {
+		return new WSRecoverableMethod<DeleteResult[], ToleradoStub>("delete") {
+			@Override
+			protected DeleteResult[] invokeActual(ToleradoStub stub)
+					throws Exception {
+				DeleteResult[] results = stub.getPartnerBinding().delete(ids);
+				return results;
+			}
+		}.invoke(this);
+	}
+
+	public DescribeDataCategoryGroupResult[] describeDataCategoryGroups(
+			final String[] sObjectType) {
+		return new WSRecoverableMethod<DescribeDataCategoryGroupResult[], ToleradoStub>(
+				"describeDataCategoryGroups") {
+			@Override
+			protected DescribeDataCategoryGroupResult[] invokeActual(
+					ToleradoStub stub) throws Exception {
+				DescribeDataCategoryGroupResult[] results = stub
+						.getPartnerBinding().describeDataCategoryGroups(
+								sObjectType);
+				return results;
+			}
+		}.invoke(this);
+	}
+
+	public DescribeDataCategoryGroupStructureResult[] describeDataCategoryGroupStructures(
+			final DataCategoryGroupSobjectTypePair[] pairs,
+			final boolean topCategoriesOnly) {
+		return new WSRecoverableMethod<DescribeDataCategoryGroupStructureResult[], ToleradoStub>(
+				"describeDataCategoryGroupStructures") {
+			@Override
+			protected DescribeDataCategoryGroupStructureResult[] invokeActual(
+					ToleradoStub stub) throws Exception {
+
+				DescribeDataCategoryGroupStructureResult[] results = stub
+						.getPartnerBinding()
+						.describeDataCategoryGroupStructures(pairs,
+								topCategoriesOnly);
+				return results;
+			}
+		}.invoke(this);
+	}
+
+	public DescribeGlobalResult describeGlobal() {
+		return new WSRecoverableMethod<DescribeGlobalResult, ToleradoStub>(
+				"describeGlobal") {
+			@Override
+			protected DescribeGlobalResult invokeActual(ToleradoStub stub)
+					throws Exception {
+				DescribeGlobalResult results = stub.getPartnerBinding()
+						.describeGlobal();
+				return results;
+			}
+		}.invoke(this);
+	}
+
+	public DescribeLayoutResult describeLayout(final String sObjectType,
+			final String[] recordTypeIds) {
+		return new WSRecoverableMethod<DescribeLayoutResult, ToleradoStub>(
+				"describeLayout") {
+			@Override
+			protected DescribeLayoutResult invokeActual(ToleradoStub stub)
+					throws Exception {
+
+				DescribeLayoutResult results = stub.getPartnerBinding()
+						.describeLayout(sObjectType, recordTypeIds);
+				return results;
+			}
+		}.invoke(this);
+	}
+
+	public DescribeSObjectResult describeSObject(final String sObjectType) {
+		return new WSRecoverableMethod<DescribeSObjectResult, ToleradoStub>(
+				"describeSObject") {
+			@Override
+			protected DescribeSObjectResult invokeActual(ToleradoStub stub)
+					throws Exception {
+
+				return stub.getPartnerBinding().describeSObject(sObjectType);
+			}
+		}.invoke(this);
+	}
+
+	public DescribeSObjectResult[] describeSObjects(final String[] sObjectType) {
+		return new WSRecoverableMethod<DescribeSObjectResult[], ToleradoStub>(
+				"describeSObjects") {
+			@Override
+			protected DescribeSObjectResult[] invokeActual(ToleradoStub stub)
+					throws Exception {
+				return stub.getPartnerBinding().describeSObjects(sObjectType);
+			}
+		}.invoke(this);
+	}
+
+	public DescribeSoftphoneLayoutResult describeSoftphoneLayout() {
+		return new WSRecoverableMethod<DescribeSoftphoneLayoutResult, ToleradoStub>(
+				"describeSoftphoneLayout") {
+			@Override
+			protected DescribeSoftphoneLayoutResult invokeActual(
+					ToleradoStub stub) throws Exception {
+				return stub.getPartnerBinding().describeSoftphoneLayout();
+			}
+		}.invoke(this);
+	}
+
+	public DescribeTabSetResult[] describeTabs() {
+		return new WSRecoverableMethod<DescribeTabSetResult[], ToleradoStub>(
+				"describeTabs") {
+			@Override
+			protected DescribeTabSetResult[] invokeActual(ToleradoStub stub)
+					throws Exception {
+				return stub.getPartnerBinding().describeTabs();
 			}
 		}.invoke(this);
 	}
