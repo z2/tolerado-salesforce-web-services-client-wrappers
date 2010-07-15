@@ -56,3 +56,43 @@ SObject[] sObjects = new SObject[] { updatedSObject };
 // SaveResult is again the same ApacheAxis class we know
 SaveResult[] saveResults = partnerStub.update(sObjects);
 }}}
+
+== Extending ToleradoSObject - Sample ==
+You might want to extend ToleradoSObject for more reusable java classes per Sobject. For code sample we have created ContactSObject with two fields extending ToleradoSobject. Note how the getter/setters are added for FirstName and LastName.
+
+You can view complete source of this class [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado-Samples/src/com/tgerm/tolerado/samples/axis14/sobject/ContactSObject.java here]
+
+Plus, we have added another sample class that uses ContactSobject for Salesforce CRUD operations, source code is available [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado-Samples/src/com/tgerm/tolerado/samples/axis14/sobject/ExtendingSObjectSample.java here]
+
+
+{{{
+public class ContactSObject extends ToleradoSobject {
+	public ContactSObject() {
+		// Just pass the Sobject type
+		super("Contact");
+	}
+
+	public ContactSObject(SObject sobj) {
+		super(sobj);
+	}
+
+	public String getFirstName() {
+		// delegates to getTextValue for fetching the correct field value
+		return getTextValue("FirstName");
+	}
+
+	public String getLastName() {
+		return getTextValue("LastName");
+	}
+
+	public void setFirstName(String val) {
+		// delegates to setAttribute for setting the correct attribute.
+		setAttribute("FirstName", val);
+	}
+
+	public void setLastName(String val) {
+		setAttribute("LastName", val);
+	}
+}
+
+}}}
