@@ -35,11 +35,13 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.sforce.soap.partner.DeleteResult;
+import com.sforce.soap.partner.Error;
 import com.sforce.soap.partner.SaveResult;
 import com.tgerm.tolerado.common.ToleradoException;
 
 /**
- * Utility class for any common functions
+ * Utility class for any common functions related to salesforce web service
+ * calls
  * 
  * @author abhinav
  * 
@@ -47,7 +49,9 @@ import com.tgerm.tolerado.common.ToleradoException;
 public class Util {
 	/**
 	 * Parses the {@link AxisFault} for fault code.
-	 * @param af {@link AxisFault} 
+	 * 
+	 * @param af
+	 *            {@link AxisFault}
 	 * @return Parsed fault code
 	 */
 	public static String faultCodeFromAxisFault(AxisFault af) {
@@ -59,6 +63,13 @@ public class Util {
 		return null;
 	}
 
+	/**
+	 * Checks if the {@link DeleteResult} in parameter contains any failure. If
+	 * there is some failure {@link ToleradoException} is thrown to notify
+	 * 
+	 * @param delResult
+	 *            {@link DeleteResult} to verify
+	 */
 	public static void checkSuccess(DeleteResult[] delResult) {
 		if (!ArrayUtils.isEmpty(delResult)) {
 			for (DeleteResult deleteResult : delResult) {
@@ -70,6 +81,14 @@ public class Util {
 			}
 		}
 	}
+
+	/**
+	 * Checks if the {@link SaveResult} in parameter contains any failure. If
+	 * there is some failure {@link ToleradoException} is thrown to notify
+	 * 
+	 * @param delResult
+	 *            {@link SaveResult} to verify
+	 */
 
 	public static void checkSuccess(SaveResult[] createResult) {
 		if (!ArrayUtils.isEmpty(createResult)) {
@@ -83,6 +102,13 @@ public class Util {
 		}
 	}
 
+	/**
+	 * Prepares an error string for all {@link Error} objects in the argument
+	 * 
+	 * @param errors
+	 *            {@link Error} for which error string should be created
+	 * @return Error string
+	 */
 	public static String toErrorString(com.sforce.soap.partner.Error[] errors) {
 		if (ArrayUtils.isEmpty(errors))
 			return null;
@@ -98,6 +124,13 @@ public class Util {
 		return buffer.toString();
 	}
 
+	/**
+	 * Converts the string array into CSV
+	 * 
+	 * @param args
+	 *            string array to be converted to CSV String
+	 * @return CSV string
+	 */
 	public static String toCSV(String[] args) {
 		String val = "";
 		if (!ArrayUtils.isEmpty(args)) {
