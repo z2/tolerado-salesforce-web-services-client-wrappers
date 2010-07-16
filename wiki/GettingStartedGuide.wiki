@@ -20,3 +20,7 @@ Once you have all the prerequisites set in your classpath. Code samples for Tole
 
 == Running Samples via the Tolerado Samples Project ==
 Tolerado Samples is a complete Java project independent of Tolerado main development branch. Its checked into SVN as java project, so you guys can checkout it from [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/#svn/trunk/Tolerado-Samples here] and start playing with samples
+
+Here is a video that shows how to checkout and setup Tolerado Samples
+
+<wiki:video url="http://www.youtube.com/watch?v=EP2I5UaNU7c"/>
