@@ -37,7 +37,7 @@ import org.apache.axis.message.MessageElement;
 import org.w3c.dom.Element;
 
 import com.sforce.soap.partner.sobject.SObject;
-import com.tgerm.tolerado.common.ToleradoException;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 
 /**
  * Utility Class for {@link SObject} parsing

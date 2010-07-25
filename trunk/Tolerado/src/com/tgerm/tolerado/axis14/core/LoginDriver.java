@@ -28,7 +28,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.tgerm.tolerado.axis14.core;
 
-import com.tgerm.tolerado.common.Credential;
 
 public interface LoginDriver {
 	ToleradoSession login(Credential cred);

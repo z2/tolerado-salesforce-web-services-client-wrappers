@@ -28,8 +28,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.tgerm.tolerado.axis14.core.method;
 
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoSession;
-import com.tgerm.tolerado.common.ToleradoException;
 
 public class WSMethodErrorHandlerFactory {
 	private static final String CLS_ENTERPRISE_WS_METHOD_ERROR_HANDLER = "com.tgerm.tolerado.axis14.enterprise.EnterpriseWSMethodErrorHandler";

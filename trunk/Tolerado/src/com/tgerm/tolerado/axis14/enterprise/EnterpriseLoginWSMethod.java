@@ -34,10 +34,10 @@ import com.sforce.soap.enterprise.SforceServiceLocator;
 import com.sforce.soap.enterprise.SoapBindingStub;
 import com.sforce.soap.enterprise.fault.ExceptionCode;
 import com.sforce.soap.enterprise.fault.LoginFault;
+import com.tgerm.tolerado.axis14.core.Credential;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoSession.SessionType;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
-import com.tgerm.tolerado.common.Credential;
-import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * Extends {@link WSRecoverableMethod} to implement salesforce login call

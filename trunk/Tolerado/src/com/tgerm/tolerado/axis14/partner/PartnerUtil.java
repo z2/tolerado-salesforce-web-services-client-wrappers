@@ -37,7 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import com.sforce.soap.partner.DeleteResult;
 import com.sforce.soap.partner.Error;
 import com.sforce.soap.partner.SaveResult;
-import com.tgerm.tolerado.common.ToleradoException;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 
 /**
  * Utility class for any common functions related to salesforce web service

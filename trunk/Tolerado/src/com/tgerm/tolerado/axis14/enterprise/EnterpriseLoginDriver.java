@@ -30,9 +30,9 @@ package com.tgerm.tolerado.axis14.enterprise;
 
 import com.sforce.soap.enterprise.LoginResult;
 
+import com.tgerm.tolerado.axis14.core.Credential;
 import com.tgerm.tolerado.axis14.core.LoginDriver;
 import com.tgerm.tolerado.axis14.core.ToleradoSession;
-import com.tgerm.tolerado.common.Credential;
 
 /**
  * Login driver that uses Enterprise WSDL to create session
