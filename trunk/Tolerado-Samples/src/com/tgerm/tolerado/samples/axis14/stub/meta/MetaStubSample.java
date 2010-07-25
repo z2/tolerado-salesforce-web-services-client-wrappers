@@ -30,7 +30,6 @@ package com.tgerm.tolerado.samples.axis14.stub.meta;
 
 import com.sforce.soap._2006._04.metadata.AsyncResult;
 import com.sforce.soap._2006._04.metadata.RetrieveRequest;
-import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
 import com.tgerm.tolerado.axis14.metadata.ToleradoMetaStub;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
@@ -43,7 +42,7 @@ import com.tgerm.tolerado.samples.cfg.LoginCfg;
 public class MetaStubSample {
 	public static void main(String[] args) {
 		// Note we created a ToleradoMetaStub here
-		ToleradoMetaStub mStub = ToleradoStubRegistry.getMetaStub(LoginCfg.self
+		ToleradoMetaStub mStub = new ToleradoMetaStub(LoginCfg.self
 				.getCredential());
 		RetrieveRequest retrieveRequest = new RetrieveRequest();
 		retrieveRequest.setApiVersion(18.0);

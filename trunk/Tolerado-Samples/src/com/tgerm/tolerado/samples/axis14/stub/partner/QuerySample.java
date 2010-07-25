@@ -28,9 +28,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.samples.axis14.stub.partner;
 
 import com.sforce.soap.partner.QueryResult;
-import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
-import com.tgerm.tolerado.axis14.partner.ToleradoStub;
-import com.tgerm.tolerado.common.Credential;
+import com.tgerm.tolerado.axis14.core.Credential;
+import com.tgerm.tolerado.axis14.partner.ToleradoPartnerStub;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
@@ -44,7 +43,7 @@ public class QuerySample {
 		// All the hassle of doing login and setting headers encapsulated in
 		// this single call
 		// ToleradoStub is a ready to use stub, with no changes required
-		ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(cred);
+		ToleradoPartnerStub pStub = new ToleradoPartnerStub(cred);
 		// Binding created transparently from the given salesforce user name
 		// password.
 		// You transparently got the

@@ -26,29 +26,53 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.samples.axis14.stub.apex;
+package com.tgerm.tolerado.samples.axis14.stub.partner;
 
-import com.sforce.soap._2006._08.apex.RunTestsResult;
-import com.tgerm.tolerado.axis14.apex.ToleradoApexStub;
-import com.tgerm.tolerado.axis14.core.Credential;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
+import com.tgerm.tolerado.axis14.partner.ToleradoPartnerStub;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
- * Shows how to execute test cases using {@link ToleradoApexStub}
+ * Checks for cached stub behavior given by Tolerado Stubs
  * 
  * @author abhinav
  * 
  */
-public class RunTestsSample {
-	// Shows how to run all tests using the Apex WSDL ..
+public class CachedStubSample {
 	public static void main(String[] args) {
-		// Create a ToleradoApexStub
-		Credential credential = LoginCfg.self.getCredential();
-		// Create stub
-		ToleradoApexStub aStub = new ToleradoApexStub(credential);
-		// This call does the rest
-		RunTestsResult runResult = aStub.runAllTests();
-		System.out.println("All Test Failures : " + runResult.getNumFailures());
-	}
+		// This will create a ready to use stub
+		ToleradoPartnerStub stub = new ToleradoPartnerStub(LoginCfg.self
+				.getCredential());
+		// Store the initial session id, it will be used later for comparing
+		// with cached results
+		String sessionId = stub.getLoginResult().getSessionId();
+		// Re-Create Stub, it should come from cache
+		stub = new ToleradoPartnerStub(LoginCfg.self.getCredential());
 
+		// If both the sessions are not equal that means caching is not working
+		// right
+		if (!sessionId.equals(stub.getLoginResult().getSessionId())) {
+			throw new ToleradoException(
+					"Caching failed, a new session was created ");
+		}
+		
+		// Logout and create a new session
+		try {
+			stub.getPartnerBinding().logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// For login on the stub, for generating a new session
+		stub.prepareSFDCSession(true);
+		
+		// We forced login, so the stub should have a new session now
+		if (sessionId.equals(stub.getLoginResult().getSessionId())) {
+			throw new ToleradoException(
+					"a new session was not created, force-login failed");
+		}
+		
+
+	}
 }

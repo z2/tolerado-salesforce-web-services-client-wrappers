@@ -29,7 +29,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.samples.axis14.sobject;
 
 import com.sforce.soap.partner.sobject.SObject;
-import com.tgerm.tolerado.axis14.core.sobject.ToleradoSobject;
+import com.tgerm.tolerado.axis14.partner.ToleradoSobject;
 
 /**
  * How to create super easy to use SObject wrappers using ToleradoSobject
