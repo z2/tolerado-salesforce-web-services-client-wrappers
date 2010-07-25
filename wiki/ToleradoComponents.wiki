@@ -11,12 +11,13 @@ Tolerado has 3 high level components.
 
 == ToleradoStub(s) ==
 These stubs are set of huge wrapper classes over all the web service calls exposed by partner, metadata and apex web service calls. It gives the fault tolerant behavior to each web service method. 
-We are providing ToleradoStub implementation for 3 salesforce WSDLs i.e. partner, apex and metadata. More details below
+We are providing ToleradoStub implementation for 4 salesforce WSDLs i.e. enterprise, partner, apex and metadata. More details below
 
 || *WSDL* || *Tolerado Stub* || *Code* || *Java Docs* ||
-|| partner.wsdl || ToleradoStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/partner/ToleradoStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/partner/ToleradoStub.html here] ||
+|| partner.wsdl || ToleradoPartnerStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/partner/ToleradoPartnerStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/partner/ToleradoStub.html here] ||
 || metadata.wsdl || ToleradoMetaStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/metadata/ToleradoMetaStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/metadata/ToleradoMetaStub.html here] ||
 || apex.wsdl || ToleradoApexStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/apex/ToleradoApexStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/apex/ToleradoApexStub.html here] ||
+|| enterprise.wsdl || ToleradoEnterpriseStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/enterprise/ToleradoEnterpriseStub.java here] ||  ||
 
 *Code samples* for ToleradoStubs can be found [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/wiki/CodeSamplesToleradoStubs here]
 
