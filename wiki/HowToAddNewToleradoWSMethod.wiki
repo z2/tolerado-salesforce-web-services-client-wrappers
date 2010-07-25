@@ -3,7 +3,7 @@ This post explains how to add new Web Service methods from partner, apex and met
 
 = Introduction =
 
-There are many web service methods in each partner, metadata and apex wsdls. So Tolerado haven’t created a method wrapper for each in ToleradoStub, ToleradoMetaStub and ToleradoApexStub. This is intentionally left because inheriting the power of fixture is too simple. 
+There are many web service methods in each partner, metadata and apex wsdls. So Tolerado haven’t created a method wrapper for each in ToleradoPartnerStub, ToleradoMetaStub and ToleradoApexStub. This is intentionally left because inheriting the power of fixture is too simple. 
 
 At very basic to implement a new web service method using Tolerado you have to extend [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/core/method/WSRecoverableMethod.html WSRecoverableMethod<R, S extends ToleradoStub>], its an abstract class and expects you to provide implementation of following method. This is explained with examples below.
 
@@ -19,12 +19,12 @@ ToleradoPartnerStub stub = new ToleradoPartnerStub(new Credential("userName", "p
 
 // Create an Java Anonymous class, implementing the WSRecoverableMethod 
 // First Generics Type Argument : "R" here is the result of actual web service call from salesforce apache axis stubs.
-// Second Generics Type Argument : "ToleradoStub" here is the Tolerado stub, that can be either of ToleradoStub, ToleradoApexStub or ToleradoMetaStub.
-WSRecoverableMethod<R, ToleradoStub> wsMethod = new WSRecoverableMethod<R, ToleradoStub>("methodName") {
+// Second Generics Type Argument : "ToleradoStub" here is the Tolerado stub, that can be either of ToleradoPartnerStub, ToleradoApexStub or ToleradoMetaStub.
+WSRecoverableMethod<R, ToleradoPartnerStub> wsMethod = new WSRecoverableMethod<R, ToleradoPartnerStub>("methodName") {
     // This method is the one where the actual Web Service call should be done via
     // Apache axis stubs. 
     @Override
-    protected R invokeActual(ToleradoStub stub) throws Exception {
+    protected R invokeActual(ToleradoPartnerStub stub) throws Exception {
         // use stub to do the actual call here
         // one shouldn't try recovering or do any special exception handling
         // here, as Tolerado fixture will do that transparently
@@ -87,10 +87,10 @@ This code snippet shows how to make a Partner query call. Have added no comments
 
 public QueryResult query(final String soql) {
     ToleradoPartnerStub stub = new ToleradoPartnerStub(new Credential("userName", "password"));   
-    WSRecoverableMethod<QueryResult, ToleradoStub> wsMethod = new WSRecoverableMethod<QueryResult, ToleradoStub>(
+    WSRecoverableMethod<QueryResult, ToleradoPartnerStub> wsMethod = new WSRecoverableMethod<QueryResult, ToleradoPartnerStub>(
             "Query") {
         @Override
-        protected QueryResult invokeActual(ToleradoStub stub)
+        protected QueryResult invokeActual(ToleradoPartnerStub stub)
                 throws Exception {
             QueryResult query = stub.getPartnerBinding().query(soql);
             return query;
