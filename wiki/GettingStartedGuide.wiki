@@ -9,7 +9,9 @@ As of now this project is wrapping stubs generated via Apache Axis 1.4. Later we
 
 
 == Prerequisites ==
- # You will need to download latest tolerado-x.x.jar from [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/downloads/list here].
+ # You will need to download latest tolerado-core-x.x.jar from [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/downloads/list here]. 
+ # If you are planning to use Tolerado with Enterprise wsdl download tolerado-enterprise-x.x.jar. For Partner WSDL users download tolerado-partner-1.1.jar.
+ # This is optional, if you want to work with metadata or apex wsdl, then you need either of Tolerado enterprise or partner jar files and respective tolerado-metadata-1.1.jar/ tolerado-apex-1.1.jar files.		
  # This is optional, if you haven't done WSDL2Java over Partner, Metadata and Apex WSDLs. You can download these jars(sfdc-<WSDL NAME>.jar) from the [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/downloads/list download page]. All these Jars are having classes generated from Apache Axis 1.4 WSDL2Java. If you have already done so, you can use you existing generated code.
  # Make sure you have all the dependencies mentioned [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/wiki/ToleradoDependencies here]. All these jars can also be checked out from SVN [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/#svn/trunk/Tolerado/dependencies/3rdparty here] 
 
