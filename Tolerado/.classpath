@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="dependencies/sfdc-wsdl2java/sfdc-apex.jar"/>
 	<classpathentry kind="lib" path="dependencies/sfdc-wsdl2java/sfdc-metadata.jar"/>
 	<classpathentry kind="lib" path="dependencies/sfdc-wsdl2java/sfdc-partner.jar"/>
+	<classpathentry kind="lib" path="dependencies/sfdc-wsdl2java/sfdc-enterprise-19.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
