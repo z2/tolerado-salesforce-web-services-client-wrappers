@@ -34,10 +34,10 @@ import com.sforce.soap.enterprise.QueryResult;
 import com.sforce.soap.enterprise.SessionHeader;
 import com.sforce.soap.enterprise.SforceServiceLocator;
 import com.sforce.soap.enterprise.SoapBindingStub;
+import com.tgerm.tolerado.axis14.core.Credential;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoStub;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
-import com.tgerm.tolerado.common.Credential;
-import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * {@link ToleradoEnterpriseStub} for Enterprise WSDL

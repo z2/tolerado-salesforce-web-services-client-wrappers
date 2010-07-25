@@ -37,10 +37,10 @@ import com.sforce.soap._2006._08.apex.LogType;
 import com.sforce.soap._2006._08.apex.RunTestsRequest;
 import com.sforce.soap._2006._08.apex.RunTestsResult;
 import com.sforce.soap._2006._08.apex.SessionHeader;
+import com.tgerm.tolerado.axis14.core.Credential;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoStub;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
-import com.tgerm.tolerado.common.Credential;
-import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * Stub for Apex WSDL, it does all the house keeping for session headers and

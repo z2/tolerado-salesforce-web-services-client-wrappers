@@ -29,9 +29,9 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.axis14.partner;
 
 import com.sforce.soap.partner.LoginResult;
+import com.tgerm.tolerado.axis14.core.Credential;
 import com.tgerm.tolerado.axis14.core.LoginDriver;
 import com.tgerm.tolerado.axis14.core.ToleradoSession;
-import com.tgerm.tolerado.common.Credential;
 
 /**
  * Login driver that uses Partner WSDL to create session

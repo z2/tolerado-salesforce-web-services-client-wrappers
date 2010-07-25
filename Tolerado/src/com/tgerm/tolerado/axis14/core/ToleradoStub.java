@@ -31,7 +31,6 @@ package com.tgerm.tolerado.axis14.core;
 import com.tgerm.tolerado.axis14.core.ToleradoSession.SessionType;
 import com.tgerm.tolerado.axis14.core.method.WSMethodErrorHandler;
 import com.tgerm.tolerado.axis14.core.method.WSMethodErrorHandlerFactory;
-import com.tgerm.tolerado.common.Credential;
 
 /**
  * Base class for all Tolerado Stubs, it gives transparent salesforce session

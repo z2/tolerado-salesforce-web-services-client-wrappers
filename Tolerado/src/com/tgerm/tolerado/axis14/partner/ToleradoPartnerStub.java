@@ -48,10 +48,10 @@ import com.sforce.soap.partner.SessionHeader;
 import com.sforce.soap.partner.SforceServiceLocator;
 import com.sforce.soap.partner.SoapBindingStub;
 import com.sforce.soap.partner.sobject.SObject;
+import com.tgerm.tolerado.axis14.core.Credential;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoStub;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
-import com.tgerm.tolerado.common.Credential;
-import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * {@link ToleradoPartnerStub} for partner WSDL

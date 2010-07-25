@@ -30,10 +30,10 @@ package com.tgerm.tolerado.axis14.core.method;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoSession;
 import com.tgerm.tolerado.axis14.core.ToleradoStub;
 import com.tgerm.tolerado.axis14.partner.ToleradoPartnerStub;
-import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * Instances of this class represents a single web service method. Those methods

@@ -37,11 +37,11 @@ import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
 import com.sforce.soap._2006._04.metadata.MetadataServiceLocator;
 import com.sforce.soap._2006._04.metadata.RetrieveRequest;
 import com.sforce.soap._2006._04.metadata.SessionHeader;
+import com.tgerm.tolerado.axis14.core.Credential;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoStub;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
 import com.tgerm.tolerado.axis14.partner.ToleradoPartnerStub;
-import com.tgerm.tolerado.common.Credential;
-import com.tgerm.tolerado.common.ToleradoException;
 
 /**
  * {@link ToleradoPartnerStub} extension for salesforce metadata wsdl
