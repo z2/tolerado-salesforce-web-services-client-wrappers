@@ -27,17 +27,12 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.tgerm.tolerado.axis14.core.method;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.axis.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.sforce.soap.partner.fault.ApiFault;
-import com.sforce.soap.partner.fault.ExceptionCode;
-import com.tgerm.tolerado.axis14.core.util.Util;
-import com.tgerm.tolerado.axis14.partner.ToleradoStub;
+import com.tgerm.tolerado.axis14.core.ToleradoSession;
+import com.tgerm.tolerado.axis14.core.ToleradoStub;
+import com.tgerm.tolerado.axis14.partner.ToleradoPartnerStub;
 import com.tgerm.tolerado.common.ToleradoException;
 
 /**
@@ -50,8 +45,8 @@ import com.tgerm.tolerado.common.ToleradoException;
  * issues.
  * 
  * Child implementations can just extend this class and override the
- * {@link WSRecoverableMethod#invokeActual(ToleradoStub)} method to do the real
- * web service method call via the correct Soap Stub. For ex.
+ * {@link WSRecoverableMethod#invokeActual(ToleradoPartnerStub)} method to do
+ * the real web service method call via the correct Soap Stub. For ex.
  * 
  * <pre>
  * 
@@ -84,9 +79,14 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 
 	private String methodName;
 
+	private S toleradoStub;
+
+	private WSMethodErrorHandler errorHandler;
+
 	public WSRecoverableMethod(String methodName) {
 		super();
 		this.methodName = methodName;
+
 	}
 
 	/**
@@ -99,11 +99,21 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * @throws ToleradoException
 	 */
 	public R invoke(S stub) {
+		// Update the instance level attribute
+		toleradoStub = stub;
+
 		retries = 0;
 		while (true) {
 			try {
 				return invokeActual(stub);
 			} catch (Exception exc) {
+				if (errorHandler == null) {
+					// Creating error handler includes class loading classes
+					// so do it once
+					errorHandler = WSMethodErrorHandlerFactory
+							.getErrorHandler(getSessionType());
+				}
+
 				if (retries >= getMaxRetries()) {
 					throw new ToleradoException(
 							"All retry attempts failed to execute "
@@ -114,7 +124,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 					retries++;
 					log.warn("Retrying " + retries + " time, remote method : "
 							+ getMethodInfo() + ", retrycount: " + retries
-							+ ", ExceptionCode: " + exc.getMessage(), exc);
+							+ ", ExceptionMsg: " + exc.getMessage());
 
 					// If Session is invalid, re login otherwise sleep.
 					if (isLoginExpired(exc))
@@ -165,6 +175,10 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 		}
 	}
 
+	protected ToleradoSession.SessionType getSessionType() {
+		return toleradoStub.getSession().getSessionType();
+	}
+
 	/**
 	 * Returns true if the Exception is coming because of Login expiration.
 	 * 
@@ -173,32 +187,20 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * @return
 	 */
 	protected boolean isLoginExpired(Exception t) {
-		if (t instanceof ApiFault) {
-			ExceptionCode code = null;
-			ApiFault af = (ApiFault) t;
-			code = af.getExceptionCode();
-			return code != null
-					&& ExceptionCode.INVALID_SESSION_ID.equals(code);
-		} else if (t instanceof AxisFault) {
-			AxisFault af = (AxisFault) t;
-			String exCode = Util.faultCodeFromAxisFault(af);
-			if (exCode != null) {
-				return exCode.equalsIgnoreCase("INVALID_SESSION_ID");
-			}
-		}
-		return false;
-
+		return errorHandler.isLoginExpired(t);
 	}
 
 	/**
 	 * Renews the user's session, if login was previously expired
 	 * 
 	 * @param stub
-	 *            The {@link ToleradoStub} instance
+	 *            The {@link ToleradoPartnerStub} instance
 	 */
 	protected void reLogin(S stub) {
-		if (stub != null)
-			stub.renewSession();
+		if (stub != null) {
+			log.warn("Preparing New SFDC Session, by forcing a login call");
+			stub.prepareSFDCSession(true);
+		}
 	}
 
 	/**
@@ -219,49 +221,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * @return
 	 */
 	protected boolean canRetry(Exception t) {
-		if (t instanceof ApiFault) {
-			ApiFault af = (ApiFault) t;
-			ExceptionCode code = af.getExceptionCode();
-			log.debug("code:" + code);
-			if (code != null)
-				return RETRYABLES.contains(code.getValue().toLowerCase());
-		} else if (t instanceof AxisFault) {
-			AxisFault af = (AxisFault) t;
-			if (af.getCause() != null
-					&& af.getCause() instanceof java.net.SocketException) {
-				return true;
-			}
-
-			String faultString = af.getFaultString();
-			if (faultString != null
-					&& faultString.indexOf("UnknownHostException") != -1) {
-				return true;
-			}
-
-			String exCode = Util.faultCodeFromAxisFault(af);
-			log.debug("code:" + exCode);
-			if (exCode != null) {
-				return RETRYABLES.contains(exCode.toLowerCase());
-			}
-
-		}
-		return false;
-
+		return errorHandler.canRetry(t);
 	}
-
-	/**
-	 * List of Retryable exceptions
-	 */
-	private static List<String> RETRYABLES = Arrays.asList(new String[] {
-			ExceptionCode.CLIENT_NOT_ACCESSIBLE_FOR_USER.getValue()
-					.toLowerCase(),
-			ExceptionCode.CLIENT_REQUIRE_UPDATE_FOR_USER.getValue()
-					.toLowerCase(),
-			ExceptionCode.INVALID_SESSION_ID.getValue().toLowerCase(),
-			ExceptionCode.QUERY_TIMEOUT.getValue().toLowerCase(),
-			ExceptionCode.REQUEST_RUNNING_TOO_LONG.getValue().toLowerCase(),
-			ExceptionCode.SERVER_UNAVAILABLE.getValue().toLowerCase(),
-			ExceptionCode.SSO_SERVICE_DOWN.getValue().toLowerCase(),
-			ExceptionCode.UNKNOWN_EXCEPTION.getValue().toLowerCase() });
 
 }

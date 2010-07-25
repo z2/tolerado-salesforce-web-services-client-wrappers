@@ -37,9 +37,9 @@ import com.sforce.soap._2006._08.apex.LogType;
 import com.sforce.soap._2006._08.apex.RunTestsRequest;
 import com.sforce.soap._2006._08.apex.RunTestsResult;
 import com.sforce.soap._2006._08.apex.SessionHeader;
-import com.sforce.soap.partner.LoginResult;
+import com.tgerm.tolerado.axis14.core.ToleradoStub;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
-import com.tgerm.tolerado.axis14.partner.ToleradoStub;
+import com.tgerm.tolerado.common.Credential;
 import com.tgerm.tolerado.common.ToleradoException;
 
 /**
@@ -52,24 +52,16 @@ import com.tgerm.tolerado.common.ToleradoException;
 public class ToleradoApexStub extends ToleradoStub {
 	private ApexBindingStub apexBinding;
 
-	public ToleradoApexStub() throws Throwable {
-		super();
-	}
-
-	/**
-	 * Prepare the partner binding and the apex binding stub
-	 */
-	@Override
-	public void prepare() {
-		super.prepare();
-		prepareApex();
+	public ToleradoApexStub(Credential c) {
+		super(c);
 	}
 
 	/**
 	 * Prepares the apex binding, sets all the headers and housekeeping
 	 * required.
 	 */
-	public void prepareApex() {
+	@Override
+	public void prepare() {
 		try {
 			apexBinding = (ApexBindingStub) new ApexServiceLocator().getApex();
 		} catch (ServiceException e) {
@@ -77,12 +69,11 @@ public class ToleradoApexStub extends ToleradoStub {
 		}
 		// Apex Session Header
 
-		LoginResult lr = getLoginResult();
-		String apexBindingURL = lr.getServerUrl().replaceAll("/u/", "/s/");
+		String apexBindingURL = session.getServerUrl().replaceAll("/u/", "/s/");
 		apexBinding._setProperty(ApexBindingStub.ENDPOINT_ADDRESS_PROPERTY,
 				apexBindingURL);
 		SessionHeader sh = new SessionHeader();
-		sh.setSessionId(lr.getSessionId());
+		sh.setSessionId(session.getSessionId());
 		apexBinding.setHeader(new ApexServiceLocator().getServiceName()
 				.getNamespaceURI(), "SessionHeader", sh);
 		// set the debugging header

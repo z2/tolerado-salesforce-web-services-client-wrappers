@@ -26,7 +26,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.axis14.core.sobject;
+package com.tgerm.tolerado.axis14.partner;
 
 import java.math.BigInteger;
 import java.util.Collection;
@@ -38,7 +38,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import com.sforce.soap.partner.sobject.SObject;
-import com.tgerm.tolerado.axis14.core.util.SObjectUtil;
 
 /**
  * An intelligent wrapper over {@link SObject} that makes easy to perform create

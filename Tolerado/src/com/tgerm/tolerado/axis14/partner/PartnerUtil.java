@@ -26,7 +26,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.axis14.core.util;
+package com.tgerm.tolerado.axis14.partner;
 
 import javax.xml.namespace.QName;
 
@@ -46,7 +46,7 @@ import com.tgerm.tolerado.common.ToleradoException;
  * @author abhinav
  * 
  */
-public class Util {
+public class PartnerUtil {
 	/**
 	 * Parses the {@link AxisFault} for fault code.
 	 * 
@@ -75,7 +75,7 @@ public class Util {
 			for (DeleteResult deleteResult : delResult) {
 				if (deleteResult.isSuccess())
 					continue;
-				String errString = Util.toErrorString(deleteResult.getErrors());
+				String errString = PartnerUtil.toErrorString(deleteResult.getErrors());
 				throw new ToleradoException("Create/Update failed. Cause: "
 						+ errString);
 			}
@@ -95,7 +95,7 @@ public class Util {
 			for (SaveResult saveResult : createResult) {
 				if (saveResult.isSuccess())
 					continue;
-				String errString = Util.toErrorString(saveResult.getErrors());
+				String errString = PartnerUtil.toErrorString(saveResult.getErrors());
 				throw new ToleradoException("Create/Update failed. Cause: "
 						+ errString);
 			}

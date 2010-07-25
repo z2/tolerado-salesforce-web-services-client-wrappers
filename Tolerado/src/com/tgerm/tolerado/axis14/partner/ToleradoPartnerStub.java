@@ -28,6 +28,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.tgerm.tolerado.axis14.partner;
 
+import javax.xml.rpc.ServiceException;
+
 import com.sforce.soap.partner.DataCategoryGroupSobjectTypePair;
 import com.sforce.soap.partner.DeleteResult;
 import com.sforce.soap.partner.DescribeDataCategoryGroupResult;
@@ -46,35 +48,22 @@ import com.sforce.soap.partner.SessionHeader;
 import com.sforce.soap.partner.SforceServiceLocator;
 import com.sforce.soap.partner.SoapBindingStub;
 import com.sforce.soap.partner.sobject.SObject;
-import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
+import com.tgerm.tolerado.axis14.core.ToleradoStub;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
 import com.tgerm.tolerado.common.Credential;
+import com.tgerm.tolerado.common.ToleradoException;
 
 /**
- * {@link ToleradoStub} for partner WSDL
+ * {@link ToleradoPartnerStub} for partner WSDL
  * 
  * @author abhinav
  * 
  */
-public class ToleradoStub {
-	private LoginResult loginResult;
+public class ToleradoPartnerStub extends ToleradoStub {
 	private SoapBindingStub partnerBinding;
-	private Credential credential;
 
-	public ToleradoStub() {
-
-	}
-
-	/**
-	 * Gives the salesforce login result
-	 * 
-	 */
-	public LoginResult getLoginResult() {
-		return loginResult;
-	}
-
-	public void setLoginResult(LoginResult loginResult) {
-		this.loginResult = loginResult;
+	public ToleradoPartnerStub(Credential cred) {
+		super(cred);
 	}
 
 	/**
@@ -84,44 +73,29 @@ public class ToleradoStub {
 		return partnerBinding;
 	}
 
-	public void setPartnerBinding(SoapBindingStub binding) {
-		this.partnerBinding = binding;
-	}
-
-	/**
-	 * 
-	 * @return The salesforce login {@link Credential} for this stub
-	 */
-	public Credential getCredential() {
-		return credential;
-	}
-
-	public void setCredential(Credential credential) {
-		this.credential = credential;
-	}
-
-	/**
-	 * Prepares this stub for next use, called internally by API
-	 */
+	@Override
 	public void prepare() {
+		try {
+			partnerBinding = (SoapBindingStub) new SforceServiceLocator()
+					.getSoap();
+		} catch (ServiceException e) {
+			throw new ToleradoException("Failed to create SoapBindingStub", e);
+		}
 		partnerBinding._setProperty(SoapBindingStub.ENDPOINT_ADDRESS_PROPERTY,
-				loginResult.getServerUrl());
+				session.getServerUrl());
 		SessionHeader sh = new SessionHeader();
-		sh.setSessionId(loginResult.getSessionId());
+		sh.setSessionId(session.getSessionId());
 		partnerBinding.setHeader(new SforceServiceLocator().getServiceName()
 				.getNamespaceURI(), "SessionHeader", sh);
 		partnerBinding.setTimeout(60000);
 	}
 
 	/**
-	 * Can be invoked by client to relogin and get a new session id
+	 * Gives the salesforce login result
+	 * 
 	 */
-	public void renewSession() {
-		boolean forceLogin = true;
-		ToleradoStub newStub = ToleradoStubRegistry.getStub(getCredential(),
-				forceLogin, this.getClass());
-		this.partnerBinding = newStub.partnerBinding;
-		this.loginResult = newStub.loginResult;
+	public LoginResult getLoginResult() {
+		return (LoginResult) session.getLoginResult();
 	}
 
 	/**
@@ -131,10 +105,10 @@ public class ToleradoStub {
 	 * @return
 	 */
 	public QueryResult query(final String soql) {
-		WSRecoverableMethod<QueryResult, ToleradoStub> wsMethod = new WSRecoverableMethod<QueryResult, ToleradoStub>(
+		WSRecoverableMethod<QueryResult, ToleradoPartnerStub> wsMethod = new WSRecoverableMethod<QueryResult, ToleradoPartnerStub>(
 				"Query") {
 			@Override
-			protected QueryResult invokeActual(ToleradoStub stub)
+			protected QueryResult invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				QueryResult query = stub.getPartnerBinding().query(soql);
 				return query;
@@ -144,9 +118,10 @@ public class ToleradoStub {
 	}
 
 	public QueryResult queryAll(final String soql) {
-		return new WSRecoverableMethod<QueryResult, ToleradoStub>("QueryAll") {
+		return new WSRecoverableMethod<QueryResult, ToleradoPartnerStub>(
+				"QueryAll") {
 			@Override
-			protected QueryResult invokeActual(ToleradoStub stub)
+			protected QueryResult invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				QueryResult query = stub.getPartnerBinding().queryAll(soql);
 				return query;
@@ -155,9 +130,10 @@ public class ToleradoStub {
 	}
 
 	public QueryResult queryMore(final String queryLocator) {
-		return new WSRecoverableMethod<QueryResult, ToleradoStub>("QueryMore") {
+		return new WSRecoverableMethod<QueryResult, ToleradoPartnerStub>(
+				"QueryMore") {
 			@Override
-			protected QueryResult invokeActual(ToleradoStub stub)
+			protected QueryResult invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				QueryResult query = stub.getPartnerBinding().queryMore(
 						queryLocator);
@@ -167,10 +143,10 @@ public class ToleradoStub {
 	}
 
 	public LeadConvertResult[] convertLead(final LeadConvert[] leadConverts) {
-		return new WSRecoverableMethod<LeadConvertResult[], ToleradoStub>(
+		return new WSRecoverableMethod<LeadConvertResult[], ToleradoPartnerStub>(
 				"convertLead") {
 			@Override
-			protected LeadConvertResult[] invokeActual(ToleradoStub stub)
+			protected LeadConvertResult[] invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				LeadConvertResult[] results = stub.getPartnerBinding()
 						.convertLead(leadConverts);
@@ -180,9 +156,10 @@ public class ToleradoStub {
 	}
 
 	public DeleteResult[] delete(final String[] ids) {
-		return new WSRecoverableMethod<DeleteResult[], ToleradoStub>("delete") {
+		return new WSRecoverableMethod<DeleteResult[], ToleradoPartnerStub>(
+				"delete") {
 			@Override
-			protected DeleteResult[] invokeActual(ToleradoStub stub)
+			protected DeleteResult[] invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				DeleteResult[] results = stub.getPartnerBinding().delete(ids);
 				return results;
@@ -192,11 +169,11 @@ public class ToleradoStub {
 
 	public DescribeDataCategoryGroupResult[] describeDataCategoryGroups(
 			final String[] sObjectType) {
-		return new WSRecoverableMethod<DescribeDataCategoryGroupResult[], ToleradoStub>(
+		return new WSRecoverableMethod<DescribeDataCategoryGroupResult[], ToleradoPartnerStub>(
 				"describeDataCategoryGroups") {
 			@Override
 			protected DescribeDataCategoryGroupResult[] invokeActual(
-					ToleradoStub stub) throws Exception {
+					ToleradoPartnerStub stub) throws Exception {
 				DescribeDataCategoryGroupResult[] results = stub
 						.getPartnerBinding().describeDataCategoryGroups(
 								sObjectType);
@@ -208,11 +185,11 @@ public class ToleradoStub {
 	public DescribeDataCategoryGroupStructureResult[] describeDataCategoryGroupStructures(
 			final DataCategoryGroupSobjectTypePair[] pairs,
 			final boolean topCategoriesOnly) {
-		return new WSRecoverableMethod<DescribeDataCategoryGroupStructureResult[], ToleradoStub>(
+		return new WSRecoverableMethod<DescribeDataCategoryGroupStructureResult[], ToleradoPartnerStub>(
 				"describeDataCategoryGroupStructures") {
 			@Override
 			protected DescribeDataCategoryGroupStructureResult[] invokeActual(
-					ToleradoStub stub) throws Exception {
+					ToleradoPartnerStub stub) throws Exception {
 
 				DescribeDataCategoryGroupStructureResult[] results = stub
 						.getPartnerBinding()
@@ -224,10 +201,10 @@ public class ToleradoStub {
 	}
 
 	public DescribeGlobalResult describeGlobal() {
-		return new WSRecoverableMethod<DescribeGlobalResult, ToleradoStub>(
+		return new WSRecoverableMethod<DescribeGlobalResult, ToleradoPartnerStub>(
 				"describeGlobal") {
 			@Override
-			protected DescribeGlobalResult invokeActual(ToleradoStub stub)
+			protected DescribeGlobalResult invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				DescribeGlobalResult results = stub.getPartnerBinding()
 						.describeGlobal();
@@ -238,10 +215,10 @@ public class ToleradoStub {
 
 	public DescribeLayoutResult describeLayout(final String sObjectType,
 			final String[] recordTypeIds) {
-		return new WSRecoverableMethod<DescribeLayoutResult, ToleradoStub>(
+		return new WSRecoverableMethod<DescribeLayoutResult, ToleradoPartnerStub>(
 				"describeLayout") {
 			@Override
-			protected DescribeLayoutResult invokeActual(ToleradoStub stub)
+			protected DescribeLayoutResult invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 
 				DescribeLayoutResult results = stub.getPartnerBinding()
@@ -252,11 +229,11 @@ public class ToleradoStub {
 	}
 
 	public DescribeSObjectResult describeSObject(final String sObjectType) {
-		return new WSRecoverableMethod<DescribeSObjectResult, ToleradoStub>(
+		return new WSRecoverableMethod<DescribeSObjectResult, ToleradoPartnerStub>(
 				"describeSObject") {
 			@Override
-			protected DescribeSObjectResult invokeActual(ToleradoStub stub)
-					throws Exception {
+			protected DescribeSObjectResult invokeActual(
+					ToleradoPartnerStub stub) throws Exception {
 
 				return stub.getPartnerBinding().describeSObject(sObjectType);
 			}
@@ -264,42 +241,43 @@ public class ToleradoStub {
 	}
 
 	public DescribeSObjectResult[] describeSObjects(final String[] sObjectType) {
-		return new WSRecoverableMethod<DescribeSObjectResult[], ToleradoStub>(
+		return new WSRecoverableMethod<DescribeSObjectResult[], ToleradoPartnerStub>(
 				"describeSObjects") {
 			@Override
-			protected DescribeSObjectResult[] invokeActual(ToleradoStub stub)
-					throws Exception {
+			protected DescribeSObjectResult[] invokeActual(
+					ToleradoPartnerStub stub) throws Exception {
 				return stub.getPartnerBinding().describeSObjects(sObjectType);
 			}
 		}.invoke(this);
 	}
 
 	public DescribeSoftphoneLayoutResult describeSoftphoneLayout() {
-		return new WSRecoverableMethod<DescribeSoftphoneLayoutResult, ToleradoStub>(
+		return new WSRecoverableMethod<DescribeSoftphoneLayoutResult, ToleradoPartnerStub>(
 				"describeSoftphoneLayout") {
 			@Override
 			protected DescribeSoftphoneLayoutResult invokeActual(
-					ToleradoStub stub) throws Exception {
+					ToleradoPartnerStub stub) throws Exception {
 				return stub.getPartnerBinding().describeSoftphoneLayout();
 			}
 		}.invoke(this);
 	}
 
 	public DescribeTabSetResult[] describeTabs() {
-		return new WSRecoverableMethod<DescribeTabSetResult[], ToleradoStub>(
+		return new WSRecoverableMethod<DescribeTabSetResult[], ToleradoPartnerStub>(
 				"describeTabs") {
 			@Override
-			protected DescribeTabSetResult[] invokeActual(ToleradoStub stub)
-					throws Exception {
+			protected DescribeTabSetResult[] invokeActual(
+					ToleradoPartnerStub stub) throws Exception {
 				return stub.getPartnerBinding().describeTabs();
 			}
 		}.invoke(this);
 	}
 
 	public SaveResult[] create(final SObject[] sObjects) {
-		return new WSRecoverableMethod<SaveResult[], ToleradoStub>("create") {
+		return new WSRecoverableMethod<SaveResult[], ToleradoPartnerStub>(
+				"create") {
 			@Override
-			protected SaveResult[] invokeActual(ToleradoStub stub)
+			protected SaveResult[] invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				return stub.getPartnerBinding().create(sObjects);
 			}
@@ -307,12 +285,14 @@ public class ToleradoStub {
 	}
 
 	public SaveResult[] update(final SObject[] sObjects) {
-		return new WSRecoverableMethod<SaveResult[], ToleradoStub>("update") {
+		return new WSRecoverableMethod<SaveResult[], ToleradoPartnerStub>(
+				"update") {
 			@Override
-			protected SaveResult[] invokeActual(ToleradoStub stub)
+			protected SaveResult[] invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				return stub.getPartnerBinding().update(sObjects);
 			}
 		}.invoke(this);
 	}
+
 }
