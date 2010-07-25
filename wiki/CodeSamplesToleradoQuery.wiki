@@ -14,7 +14,7 @@ Code sample below will show, how you can get rid of all that hassle by using Tol
 ToleradoPartnerStub pStub = new ToleradoPartnerStub(new Credential("username", "password"));
 // Wrapper class for making queryMore calls super easy
 // Just pass the SOQL and batch size here, it will take care of the rest
-ToleradoQuery q = new ToleradoQuery(pStub, &quot;Select name From lead&quot;,
+ToleradoQuery q = new ToleradoQuery(pStub, "Select name From lead",
                             250);    
 // Do Java style iteration over the ToleradoQuery
 while (q.hasMoreRecords()) {
