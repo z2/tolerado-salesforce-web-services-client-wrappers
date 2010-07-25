@@ -35,7 +35,6 @@ import org.apache.commons.logging.LogFactory;
 import com.sforce.soap.enterprise.fault.ApiFault;
 import com.sforce.soap.enterprise.fault.ExceptionCode;
 import com.tgerm.tolerado.axis14.core.method.WSMethodErrorHandler;
-import com.tgerm.tolerado.axis14.partner.PartnerUtil;
 
 public class EnterpriseWSMethodErrorHandler implements WSMethodErrorHandler {
 	private static final Log log = LogFactory
@@ -62,7 +61,7 @@ public class EnterpriseWSMethodErrorHandler implements WSMethodErrorHandler {
 				return true;
 			}
 
-			String exCode = PartnerUtil.faultCodeFromAxisFault(af);
+			String exCode = EnterpriseUtil.faultCodeFromAxisFault(af);
 			log.debug("code:" + exCode);
 			if (exCode != null) {
 				return RETRYABLES.contains(exCode.toLowerCase());
@@ -81,7 +80,7 @@ public class EnterpriseWSMethodErrorHandler implements WSMethodErrorHandler {
 					&& ExceptionCode.INVALID_SESSION_ID.equals(code);
 		} else if (t instanceof AxisFault) {
 			AxisFault af = (AxisFault) t;
-			String exCode = PartnerUtil.faultCodeFromAxisFault(af);
+			String exCode = EnterpriseUtil.faultCodeFromAxisFault(af);
 			if (exCode != null) {
 				return exCode.equalsIgnoreCase("INVALID_SESSION_ID");
 			}
