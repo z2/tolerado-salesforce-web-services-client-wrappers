@@ -40,6 +40,7 @@ import com.sforce.soap._2006._08.apex.SessionHeader;
 import com.tgerm.tolerado.axis14.core.Credential;
 import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.ToleradoStub;
+import com.tgerm.tolerado.axis14.core.ToleradoSession.SessionType;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
 
 /**
@@ -67,9 +68,12 @@ public class ToleradoApexStub extends ToleradoStub {
 		} catch (ServiceException e) {
 			throw new ToleradoException(e);
 		}
+		String apexBindingURL = null;
 		// Apex Session Header
-
-		String apexBindingURL = session.getServerUrl().replaceAll("/u/", "/s/");
+		if (session.getSessionType() == SessionType.Partner)
+			apexBindingURL = session.getServerUrl().replaceAll("/u/", "/s/");
+		else 
+			apexBindingURL = session.getServerUrl().replaceAll("/c/", "/s/");
 		apexBinding._setProperty(ApexBindingStub.ENDPOINT_ADDRESS_PROPERTY,
 				apexBindingURL);
 		SessionHeader sh = new SessionHeader();
