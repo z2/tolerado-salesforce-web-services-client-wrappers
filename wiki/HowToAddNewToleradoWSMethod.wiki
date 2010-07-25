@@ -15,7 +15,7 @@ WSRecoverableMethod is an Abstract web service method template, extending this c
 
 {{{
 // Create a stub from Cached registry for the desired username/pass
-ToleradoStub stub = ToleradoStubRegistry.getPartnerStub(new Credential("userName", "password"));
+ToleradoPartnerStub stub = new ToleradoPartnerStub(new Credential("userName", "password"));
 
 // Create an Java Anonymous class, implementing the WSRecoverableMethod 
 // First Generics Type Argument : "R" here is the result of actual web service call from salesforce apache axis stubs.
@@ -46,8 +46,7 @@ Code snippet below shows how to implement Query WS method. Don't think its big, 
 static RunTestsResult runSelectiveTests(final String[] classes,
         final String namespace, final String[] packages) {
     // Stub for Apex WSDL, fetched from cached Registry
-    ToleradoApexStub stub = ToleradoStubRegistry
-            .getApexStub(new Credential("userName", "password"));
+    ToleradoApexStub stub = new ToleradoApexStub(new Credential("userName", "password"));
     WSRecoverableMethod<RunTestsResult, ToleradoApexStub> wsRecoverableMethod = null;
     // An Java Anonymous class, implementing the WSRecoverableMethod created
     // First Generics Type Argument is the result of actual web service call
@@ -87,8 +86,7 @@ This code snippet shows how to make a Partner query call. Have added no comments
 {{{
 
 public QueryResult query(final String soql) {
-    ToleradoApexStub stub = ToleradoStubRegistry
-            .getApexStub(new Credential("userName", "password"));   
+    ToleradoPartnerStub stub = new ToleradoPartnerStub(new Credential("userName", "password"));   
     WSRecoverableMethod<QueryResult, ToleradoStub> wsMethod = new WSRecoverableMethod<QueryResult, ToleradoStub>(
             "Query") {
         @Override
@@ -108,8 +106,7 @@ This code snippet shows how to make a Retrieve call from metadata wsdl. Again Ha
 {{{
 public AsyncResult retrieve(final RetrieveRequest retrieveRequest)
         throws Throwable {
-    ToleradoApexStub stub = ToleradoStubRegistry
-            .getApexStub(new Credential("userName", "password"));   
+    ToleradoMetaStub stub = new ToleradoMetaStub(new Credential("userName", "password"));   
     WSRecoverableMethod<AsyncResult, ToleradoMetaStub> wsMethod = new WSRecoverableMethod<AsyncResult, ToleradoMetaStub>(
             "retrieve") {
         @Override
