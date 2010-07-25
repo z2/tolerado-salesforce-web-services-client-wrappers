@@ -7,7 +7,7 @@ ToleradoStubs are meant to provide transparent fault tolerance, caching and hous
 == Querying Records - Sample ==
 {{{
 // All the hassle of doing login and setting headers encapsulated in this single call
-// ToleradoStub is a ready to use stub, with no changes required
+// ToleradoPartnerStub is a ready to use stub, with no settings/configuration required
 ToleradoPartnerStub pStub = new ToleradoPartnerStub(new Credential("userName", "password"));
 // Binding created transparently from the given salesforce user name password.
 // You transparently got the
@@ -68,7 +68,6 @@ static DeleteResult[] deleteSobjects(final String[] idsToDelete) {
 
 == Run All Tests - Sample ==
 {{{
-// Note we called getApexStub on the ToleradoStubRegistry
 // You saved all the hassle of creating Soap Stubs for partner login and then setting up
 // headers for Apex Stub. Even Apex stub requires some url replacement to work also, that is done transparently
 ToleradoApexStub stub = new ToleradoApexStub(new Credential("userName", "password"));
@@ -81,7 +80,6 @@ System.out.println("All Test Failures : " + runResult.getNumFailures());
 
 == Retrieve Request - Sample ==
 {{{
-// Note we called getMetaStub on the ToleradoStubRegistry
 // You saved all the hassle of creating Soap Stubs for partner login and then setting up
 // headers for Metadata Stub. 
 ToleradoMetaStub mStub = new ToleradoMetaStub(cred);
