@@ -17,7 +17,7 @@ SObject updatedSObject = sobj.getUpdatedSObject();
 SObject[] sObjects = new SObject[] { updatedSObject };
 
 // Partner Stub will be needed when working with ToleradoSobject
-ToleradoStub partnerStub = ToleradoStubRegistry.getPartnerStub(new Credential("userName", "password"));
+ToleradoPartnerStub partnerStub = new ToleradoPartnerStub(new Credential("userName", "password"));
 // Call the create via the Same Partner Stub
 // SaveResult is the same Apache Axis class we all know
 SaveResult[] saveResults = partnerStub.create(sObjects);
@@ -29,7 +29,7 @@ SaveResult[] saveResults = partnerStub.create(sObjects);
 {{{
 // replace it with your contact sobject's id
 String sObjectId = "<Contact Id>";
-ToleradoStub partnerStub = ToleradoStubRegistry.getPartnerStub(new Credential("userName", "password"));
+ToleradoPartnerStub partnerStub = new ToleradoPartnerStub(new Credential("userName", "password"));
 // Do normal Soql Call
 QueryResult qr = partnerStub.query("Select Id, FirstName, LastName from Contact where id = '" + sObjectId + "'");
 if (ArrayUtils.isEmpty(qr.getRecords())) {
