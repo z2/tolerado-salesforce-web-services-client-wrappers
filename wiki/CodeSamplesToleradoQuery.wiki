@@ -11,7 +11,7 @@ Code sample below will show, how you can get rid of all that hassle by using Tol
 {{{
 
 // Cached, Recoverable Stub
-ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(new Credential(&quot;username&quot;, &quot;password&quot;));
+ToleradoPartnerStub pStub = new ToleradoPartnerStub(new Credential("username", "password"));
 // Wrapper class for making queryMore calls super easy
 // Just pass the SOQL and batch size here, it will take care of the rest
 ToleradoQuery q = new ToleradoQuery(pStub, &quot;Select name From lead&quot;,
@@ -24,7 +24,7 @@ while (q.hasMoreRecords()) {
     for(sObject lead : records) {
         System.out.println(lead.get_any()[0].getValue());
     }            
-            log.debug(&quot;Fetched next &quot; + records.length + &quot; records !&quot;);
+            log.debug("Fetched next " + records.length + " records !");
     }
 // No try catch block as run time exception is thrown, if the stub can't recover
 // the error. 
