@@ -31,5 +31,5 @@ Its a partner query helper class. When querying with partner binding you can dir
 == ToleradoSobject ==
 Wraps the com.sforce.soap.partner.sobject.SObject class, so that creating, updating and working with attributes can be pretty correct and easy.
 
- * Complete source of ToleradoSobject is available [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/core/sobject/ToleradoSobject.java here]
+ * Complete source of ToleradoSobject is available [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/partner/ToleradoSobject.java here]
  * ToleradoSobject [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/wiki/CodeSamplesToleradoSObject Code samples]
