@@ -14,7 +14,7 @@ These stubs are set of huge wrapper classes over all the web service calls expos
 We are providing ToleradoStub implementation for 4 salesforce WSDLs i.e. enterprise, partner, apex and metadata. More details below
 
 || *WSDL* || *Tolerado Stub* || *Code* || *Java Docs* ||
-|| partner.wsdl || ToleradoPartnerStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/partner/ToleradoPartnerStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/partner/ToleradoStub.html here] ||
+|| partner.wsdl || ToleradoPartnerStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/partner/ToleradoPartnerStub.java here] ||  ||
 || metadata.wsdl || ToleradoMetaStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/metadata/ToleradoMetaStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/metadata/ToleradoMetaStub.html here] ||
 || apex.wsdl || ToleradoApexStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/apex/ToleradoApexStub.java here] || [http://tgerm-docs.appspot.com/wsdocs/com/tgerm/tolerado/axis14/apex/ToleradoApexStub.html here] ||
 || enterprise.wsdl || ToleradoEnterpriseStub || [http://code.google.com/p/tolerado-salesforce-web-services-client-wrappers/source/browse/trunk/Tolerado/src/com/tgerm/tolerado/axis14/enterprise/ToleradoEnterpriseStub.java here] ||  ||
