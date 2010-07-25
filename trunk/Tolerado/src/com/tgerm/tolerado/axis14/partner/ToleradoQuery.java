@@ -73,7 +73,7 @@ public class ToleradoQuery {
 	 */
 	private static final int DEFAULT_BATCH_SIZE = 200;
 
-	private ToleradoStub binding;
+	private ToleradoPartnerStub binding;
 	private String soql;
 	private QueryResult queryResult;
 
@@ -86,7 +86,7 @@ public class ToleradoQuery {
 	 * @param soql
 	 *            SOQL query string
 	 */
-	public ToleradoQuery(ToleradoStub binding, String soql) {
+	public ToleradoQuery(ToleradoPartnerStub binding, String soql) {
 		this(binding, soql, DEFAULT_BATCH_SIZE);
 	}
 
@@ -101,7 +101,7 @@ public class ToleradoQuery {
 	 * @param batchSize
 	 *            the new batch size for querying
 	 */
-	public ToleradoQuery(ToleradoStub pStub, String soql,
+	public ToleradoQuery(ToleradoPartnerStub pStub, String soql,
 			int batchSize) {
 		super();
 		// Query can't fetch more then 500 records, so batch size should be less

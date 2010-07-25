@@ -25,17 +25,17 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.tgerm.tolerado.axis14.core.method.impl;
+package com.tgerm.tolerado.axis14.enterprise;
 
 import javax.xml.rpc.ServiceException;
 
-import com.sforce.soap.partner.LoginResult;
-import com.sforce.soap.partner.SforceServiceLocator;
-import com.sforce.soap.partner.SoapBindingStub;
-import com.sforce.soap.partner.fault.ExceptionCode;
-import com.sforce.soap.partner.fault.LoginFault;
+import com.sforce.soap.enterprise.LoginResult;
+import com.sforce.soap.enterprise.SforceServiceLocator;
+import com.sforce.soap.enterprise.SoapBindingStub;
+import com.sforce.soap.enterprise.fault.ExceptionCode;
+import com.sforce.soap.enterprise.fault.LoginFault;
+import com.tgerm.tolerado.axis14.core.ToleradoSession.SessionType;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
-import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.common.Credential;
 import com.tgerm.tolerado.common.ToleradoException;
 
@@ -45,15 +45,12 @@ import com.tgerm.tolerado.common.ToleradoException;
  * @author abhinav
  * 
  */
-public class LoginWSMethod extends
-		WSRecoverableMethod<ToleradoStub, ToleradoStub> {
+public class EnterpriseLoginWSMethod extends
+		WSRecoverableMethod<LoginResult, ToleradoEnterpriseStub> {
 	private Credential credential;
-	private Class<? extends ToleradoStub> stubClass;
 
-	public LoginWSMethod(Credential cred,
-			Class<? extends ToleradoStub> stubClass) {
+	public EnterpriseLoginWSMethod(Credential cred) {
 		super("login");
-		this.stubClass = stubClass;
 		this.credential = cred;
 	}
 
@@ -66,13 +63,20 @@ public class LoginWSMethod extends
 	}
 
 	@Override
-	protected void reLogin(ToleradoStub stub) {
+	protected SessionType getSessionType() {
+		// Override this method, as we don't have stub during the login calls
+		return SessionType.Enterprise;
+	}
+
+	@Override
+	protected void reLogin(ToleradoEnterpriseStub stub) {
 		// Override and do nothing, as its a Login Call already.
 		// We need to stop parent from attempting any relogin on this call
 	}
 
 	@Override
-	protected ToleradoStub invokeActual(ToleradoStub stub) throws Exception {
+	protected LoginResult invokeActual(ToleradoEnterpriseStub stub)
+			throws Exception {
 		SoapBindingStub binding;
 		try {
 			binding = (SoapBindingStub) new SforceServiceLocator().getSoap();
@@ -112,11 +116,6 @@ public class LoginWSMethod extends
 					+ userName);
 		}
 
-		ToleradoStub toleradoStub = stubClass.newInstance();
-		toleradoStub.setPartnerBinding(binding);
-		toleradoStub.setLoginResult(loginResult);
-		toleradoStub.setCredential(credential);
-		toleradoStub.prepare();
-		return toleradoStub;
+		return loginResult;
 	}
 }
