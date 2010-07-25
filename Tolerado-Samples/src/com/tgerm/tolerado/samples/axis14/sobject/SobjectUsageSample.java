@@ -36,12 +36,11 @@ import com.sforce.soap.partner.DeleteResult;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SaveResult;
 import com.sforce.soap.partner.sobject.SObject;
-import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
+import com.tgerm.tolerado.axis14.core.ToleradoException;
 import com.tgerm.tolerado.axis14.core.method.WSRecoverableMethod;
-import com.tgerm.tolerado.axis14.core.sobject.ToleradoSobject;
-import com.tgerm.tolerado.axis14.core.util.Util;
-import com.tgerm.tolerado.axis14.partner.ToleradoStub;
-import com.tgerm.tolerado.common.ToleradoException;
+import com.tgerm.tolerado.axis14.partner.PartnerUtil;
+import com.tgerm.tolerado.axis14.partner.ToleradoPartnerStub;
+import com.tgerm.tolerado.axis14.partner.ToleradoSobject;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
@@ -51,7 +50,7 @@ import com.tgerm.tolerado.samples.cfg.LoginCfg;
  * 
  */
 public class SobjectUsageSample {
-	// Logger from - Apache commons logging 
+	// Logger from - Apache commons logging
 	private static Log log = LogFactory.getLog(SobjectUsageSample.class);
 
 	public static void main(String[] args) {
@@ -70,12 +69,12 @@ public class SobjectUsageSample {
 	 *            Sobject ids to delete
 	 */
 	static void deleteSobject(final String sObjId) {
-		ToleradoStub partnerStub = ToleradoStubRegistry
-				.getPartnerStub(LoginCfg.self.getCredential());
-		WSRecoverableMethod<DeleteResult[], ToleradoStub> deleteMethod = new WSRecoverableMethod<DeleteResult[], ToleradoStub>(
+		ToleradoPartnerStub partnerStub = new ToleradoPartnerStub(LoginCfg.self
+				.getCredential());
+		WSRecoverableMethod<DeleteResult[], ToleradoPartnerStub> deleteMethod = new WSRecoverableMethod<DeleteResult[], ToleradoPartnerStub>(
 				"delete") {
 			@Override
-			protected DeleteResult[] invokeActual(ToleradoStub stub)
+			protected DeleteResult[] invokeActual(ToleradoPartnerStub stub)
 					throws Exception {
 				final String[] idsToDelete = new String[] { sObjId };
 				return stub.getPartnerBinding().delete(idsToDelete);
@@ -83,7 +82,7 @@ public class SobjectUsageSample {
 		};
 
 		DeleteResult[] results = deleteMethod.invoke(partnerStub);
-		Util.checkSuccess(results);
+		PartnerUtil.checkSuccess(results);
 	}
 
 	/**
@@ -93,8 +92,8 @@ public class SobjectUsageSample {
 	 */
 	static String createSObject() {
 		// Get the partner stub
-		ToleradoStub partnerStub = ToleradoStubRegistry
-				.getPartnerStub(LoginCfg.self.getCredential());
+		ToleradoPartnerStub partnerStub = new ToleradoPartnerStub(LoginCfg.self
+				.getCredential());
 		ToleradoSobject sobj = new ToleradoSobject("Contact");
 		sobj.setAttribute("FirstName", "Abhinav");
 		sobj.setAttribute("LastName", "Gupta");
@@ -105,7 +104,7 @@ public class SobjectUsageSample {
 		SObject[] sObjects = new SObject[] { updatedSObject };
 		SaveResult[] saveResults = partnerStub.create(sObjects);
 		// Throws Error in case Save is failed
-		Util.checkSuccess(saveResults);
+		PartnerUtil.checkSuccess(saveResults);
 		return saveResults[0].getId();
 	}
 
@@ -116,8 +115,8 @@ public class SobjectUsageSample {
 	 *            Sobject Id
 	 */
 	static void queryAndUpdateSObject(String id) {
-		ToleradoStub partnerStub = ToleradoStubRegistry
-				.getPartnerStub(LoginCfg.self.getCredential());
+		ToleradoPartnerStub partnerStub = new ToleradoPartnerStub(LoginCfg.self
+				.getCredential());
 		// Create SOQL
 		String soql = "Select Id, FirstName, LastName from Contact where id = '"
 				+ id + "'";
@@ -140,6 +139,6 @@ public class SobjectUsageSample {
 		SObject[] sObjects = new SObject[] { updatedSObject };
 		SaveResult[] saveResults = partnerStub.update(sObjects);
 		// Throws Error in case Save is failed
-		Util.checkSuccess(saveResults);
+		PartnerUtil.checkSuccess(saveResults);
 	}
 }

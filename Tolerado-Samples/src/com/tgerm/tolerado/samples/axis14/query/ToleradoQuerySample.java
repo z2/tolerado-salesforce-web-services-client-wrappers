@@ -31,9 +31,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.sforce.soap.partner.sobject.SObject;
-import com.tgerm.tolerado.axis14.core.ToleradoStubRegistry;
+import com.tgerm.tolerado.axis14.partner.ToleradoPartnerStub;
 import com.tgerm.tolerado.axis14.partner.ToleradoQuery;
-import com.tgerm.tolerado.axis14.partner.ToleradoStub;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 /**
@@ -46,11 +45,11 @@ public class ToleradoQuerySample {
 	private static Log log = LogFactory.getLog(ToleradoQuerySample.class);
 
 	public static void main(String[] args) throws Exception {
-		ToleradoStub pStub = ToleradoStubRegistry.getPartnerStub(LoginCfg.self
+		ToleradoPartnerStub pStub = new ToleradoPartnerStub(LoginCfg.self
 				.getCredential());
 
 		ToleradoQuery q = new ToleradoQuery(pStub, "Select Name from Contact",
-				400);
+				499);
 		while (q.hasMoreRecords()) {
 			SObject[] records = q.getRecords();
 			log.debug("Fetched next " + records.length + " records !");

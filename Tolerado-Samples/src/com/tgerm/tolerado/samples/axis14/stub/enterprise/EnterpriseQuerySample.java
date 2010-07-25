@@ -26,29 +26,20 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.tgerm.tolerado.samples.axis14.stub.apex;
+package com.tgerm.tolerado.samples.axis14.stub.enterprise;
 
-import com.sforce.soap._2006._08.apex.RunTestsResult;
-import com.tgerm.tolerado.axis14.apex.ToleradoApexStub;
-import com.tgerm.tolerado.axis14.core.Credential;
+import com.sforce.soap.enterprise.QueryResult;
+import com.sforce.soap.enterprise.sobject.Contact;
+import com.tgerm.tolerado.axis14.enterprise.ToleradoEnterpriseStub;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
-/**
- * Shows how to execute test cases using {@link ToleradoApexStub}
- * 
- * @author abhinav
- * 
- */
-public class RunTestsSample {
-	// Shows how to run all tests using the Apex WSDL ..
-	public static void main(String[] args) {
-		// Create a ToleradoApexStub
-		Credential credential = LoginCfg.self.getCredential();
-		// Create stub
-		ToleradoApexStub aStub = new ToleradoApexStub(credential);
-		// This call does the rest
-		RunTestsResult runResult = aStub.runAllTests();
-		System.out.println("All Test Failures : " + runResult.getNumFailures());
-	}
+public class EnterpriseQuerySample {
 
+	public static void main(String[] args) {
+		ToleradoEnterpriseStub s = new ToleradoEnterpriseStub(LoginCfg.self
+				.getCredential());
+		QueryResult qr = s.query("select id, Name from contact limit 1");
+		Contact con = (Contact) qr.getRecords()[0];
+		System.out.println("Loaded one contact with Name:" + con.getName());
+	}
 }
