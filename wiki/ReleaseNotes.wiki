@@ -1,13 +1,11 @@
+#labels Featured
 Gives information about tolerado releases
 
-= Introduction =
+= Release 1.1 =
 
-Add your content here.
+ * Overhauled the Tolerado framework to allow plug and play behavior of enterprise,partner, metadata and apex wsdls. So those who are working only on partner, don't need to carry extraneous stuff for apex, metadata or enterprise wsdls.
+ * Fixed session error handling issues.
 
+= Release 1.0 = 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * Started the project 
