@@ -56,7 +56,7 @@ public class PartnerUtil {
 	 */
 	public static String faultCodeFromAxisFault(AxisFault af) {
 		QName faultCode = af.getFaultCode();
-		if (faultCode != null && StringUtils.isBlank(faultCode.getLocalPart())) {
+		if (faultCode != null && !StringUtils.isBlank(faultCode.getLocalPart())) {
 			String code = faultCode.getLocalPart();
 			return code;
 		}
