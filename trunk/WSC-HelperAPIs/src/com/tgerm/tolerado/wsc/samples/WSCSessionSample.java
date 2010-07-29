@@ -43,6 +43,7 @@ import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
 import com.tgerm.tolerado.samples.cfg.Credential;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
+import com.tgerm.tolerado.wsc.samples.WSCSession.LoginWSDL;
 
 /**
  * @author abhinav
@@ -51,9 +52,8 @@ public class WSCSessionSample {
 
 	public static void main(String[] args) throws ConnectionException {
 		Credential credential = LoginCfg.self.getCredential();
-		WSCSession session = new WSCSession(
-				WSCSession.LoginWSDL.EnterpriseWSDL, credential.getUserName(),
-				credential.getPassword());
+		WSCSession session = new WSCSession(LoginWSDL.Partner, credential
+				.getUserName(), credential.getPassword());
 
 		// Partner WSDL Code Sample
 		doPartner(session);
@@ -69,17 +69,17 @@ public class WSCSessionSample {
 
 	}
 
-	private static void doEnterprise(WSCSession sessionFactory)
+	private static void doEnterprise(WSCSession session)
 			throws ConnectionException {
 		// 
 		// Create Enterprise Connection
 		//
 		ConnectorConfig entCfg = new ConnectorConfig();
 		entCfg.setManualLogin(true);
-		entCfg.setServiceEndpoint(sessionFactory.getEnterpriseServerUrl());
+		entCfg.setServiceEndpoint(session.getEnterpriseServerUrl());
+		entCfg.setSessionId(session.getSessionId());
 		EnterpriseConnection entConn = com.sforce.soap.enterprise.Connector
 				.newConnection(entCfg);
-		entConn.setSessionHeader(sessionFactory.getSessionId());
 
 		// Enterprise WSDL for query
 		QueryResult queryResults = entConn
@@ -91,17 +91,16 @@ public class WSCSessionSample {
 		}
 	}
 
-	private static void doPartner(WSCSession sessionFactory)
+	private static void doPartner(WSCSession session)
 			throws ConnectionException {
 		//
 		// Create new Partner Connection
 		//
 		ConnectorConfig config = new ConnectorConfig();
 		config.setManualLogin(true);
-		config.setServiceEndpoint(sessionFactory.getPartnerServerUrl());
-		config.setSessionId(sessionFactory.getSessionId());
+		config.setServiceEndpoint(session.getPartnerServerUrl());
+		config.setSessionId(session.getSessionId());
 		PartnerConnection partnerConn = Connector.newConnection(config);
-		partnerConn.setSessionHeader(sessionFactory.getSessionId());
 
 		// Create a new Contact
 		SObject contact = new SObject();
@@ -124,8 +123,7 @@ public class WSCSessionSample {
 		//
 		ConnectorConfig apexConfig = new ConnectorConfig();
 		apexConfig.setSessionId(session.getSessionId());
-		String apexEndpoint = session.getApexServerUrl();
-		apexConfig.setServiceEndpoint(apexEndpoint);
+		apexConfig.setServiceEndpoint(session.getApexServerUrl());
 		SoapConnection apexConnection = com.sforce.soap.apex.Connector
 				.newConnection(apexConfig);
 
