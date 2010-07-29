@@ -43,7 +43,7 @@ public class WSCSession {
 	public static final String CLS_ENTERPRISE_CONNECTOR = "com.sforce.soap.enterprise.Connector";
 
 	public static enum LoginWSDL {
-		EnterpriseWSDL, PartnerWSDL
+		Enterprise, Partner
 	}
 
 	private final ConnectorConfig config;
@@ -56,7 +56,7 @@ public class WSCSession {
 		config = new ConnectorConfig();
 		config.setManualLogin(true);
 		String connectorClassName = null;
-		if (loginSource == LoginWSDL.EnterpriseWSDL) {
+		if (loginSource == LoginWSDL.Enterprise) {
 			connectorClassName = CLS_ENTERPRISE_CONNECTOR;
 		} else {
 			connectorClassName = CLS_PARTNER_CONNECTOR;
