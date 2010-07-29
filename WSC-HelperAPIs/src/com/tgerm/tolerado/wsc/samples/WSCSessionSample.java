@@ -52,8 +52,12 @@ public class WSCSessionSample {
 
 	public static void main(String[] args) throws ConnectionException {
 		Credential credential = LoginCfg.self.getCredential();
-		WSCSession session = new WSCSession(LoginWSDL.Partner, credential
-				.getUserName(), credential.getPassword());
+		LoginWSDL loginWSDL = LoginWSDL.Enterprise;
+
+		// Un-Comment this line, if you want to login via Partner WSDL
+		//LoginWSDL loginWSDL = LoginWSDL.Partner;
+		WSCSession session = new WSCSession(loginWSDL,
+				credential.getUserName(), credential.getPassword());
 
 		// Partner WSDL Code Sample
 		doPartner(session);
