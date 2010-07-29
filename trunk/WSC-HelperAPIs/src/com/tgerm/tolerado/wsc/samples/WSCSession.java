@@ -6,6 +6,8 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
@@ -38,6 +40,11 @@ import com.sforce.ws.ConnectorConfig;
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * Wrapper over the WSC Connector
+ * 
+ * @author abhinav
+ */
 public class WSCSession {
 	public static final String CLS_PARTNER_CONNECTOR = "com.sforce.soap.partner.Connector";
 	public static final String CLS_ENTERPRISE_CONNECTOR = "com.sforce.soap.enterprise.Connector";
@@ -46,37 +53,52 @@ public class WSCSession {
 		Enterprise, Partner
 	}
 
+	/**
+	 * This map will give a performance boost by caching the loaded classes for
+	 * once
+	 */
+	private static final Map<LoginWSDL, Class<?>> WSDL_CONNECTOR_CLASSES = new HashMap<LoginWSDL, Class<?>>();
+	static {
+		Class<?> connectorClass;
+		try {
+			connectorClass = Class.forName(CLS_ENTERPRISE_CONNECTOR);
+			WSDL_CONNECTOR_CLASSES.put(LoginWSDL.Enterprise, connectorClass);
+		} catch (Exception e) {
+		}
+		try {
+			connectorClass = Class.forName(CLS_PARTNER_CONNECTOR);
+			WSDL_CONNECTOR_CLASSES.put(LoginWSDL.Partner, connectorClass);
+		} catch (Exception e) {
+		}
+	}
+
 	private final ConnectorConfig config;
 	private String metadataServerUrl;
-	private String serverUrl;
 	private String sessionId;
 
 	public WSCSession(LoginWSDL loginSource, String un, String pass)
 			throws ConnectionException {
-		config = new ConnectorConfig();
-		config.setManualLogin(true);
-		String connectorClassName = null;
-		if (loginSource == LoginWSDL.Enterprise) {
-			connectorClassName = CLS_ENTERPRISE_CONNECTOR;
-		} else {
-			connectorClassName = CLS_PARTNER_CONNECTOR;
+		// Load the Enterprise/Partner Connector class from Cache
+		Class<?> connectorClass = WSDL_CONNECTOR_CLASSES.get(loginSource);
+		if (connectorClass == null) {
+			throw new RuntimeException(
+					"Enterprise/Partner Connector classes not available in classpath.");
 		}
 
 		try {
-			Class<?> connectorClass;
-			connectorClass = Class.forName(connectorClassName);
 			Method newConnectionMethod = connectorClass.getMethod(
 					"newConnection", ConnectorConfig.class);
+			config = new ConnectorConfig();
+			config.setManualLogin(true);
+
 			Object connection = newConnectionMethod.invoke(null, config);
 			Method loginMethod = connection.getClass().getMethod("login",
 					String.class, String.class);
 			Object loginResult = loginMethod.invoke(connection, un, pass);
-
 			// Parses required information from login result
 			parseLoginResult(loginResult);
 		} catch (Exception e) {
-			throw new RuntimeException(
-					"Failed to Instantiate WSC Session Factory", e);
+			throw new RuntimeException("Failed to Instantiate WSC Session", e);
 		}
 
 	}
@@ -90,8 +112,6 @@ public class WSCSession {
 			String fieldName = pd.getName();
 			if ("metadataServerUrl".equals(fieldName)) {
 				metadataServerUrl = readPropertyValue(loginResult, pd);
-			} else if ("serverUrl".equals(fieldName)) {
-				serverUrl = readPropertyValue(loginResult, pd);
 			} else if ("sessionId".equals(fieldName)) {
 				sessionId = readPropertyValue(loginResult, pd);
 			}
@@ -127,6 +147,6 @@ public class WSCSession {
 	@Override
 	public String toString() {
 		return "WSCSessionFactory [metadataServerUrl=" + metadataServerUrl
-				+ ", serverUrl=" + serverUrl + ", sessionId=" + sessionId + "]";
+				+ ", sessionId=" + sessionId + "]";
 	}
 }
