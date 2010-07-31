@@ -35,13 +35,31 @@ import java.util.List;
 import com.sforce.ws.SoapFaultException;
 import com.tgerm.tolerado.wsc.core.CoreUtil;
 
-public class WSErrorHandler {
+public abstract class WSErrorHandler {
 	protected static final List<String> RETRYABLES = Arrays
 			.asList(new String[] { "client_not_accessible_for_user",
 					"client_require_update_for_user", "invalid_session_id",
 					"query_timeout", "request_running_too_long",
 					"server_unavailable", "sso_service_down",
 					"unknown_exception" });
+
+	/**
+	 * Partner or Enterprise WSDL will give fine implementations as per
+	 * exception
+	 * 
+	 * @param ex
+	 * @return True if login is required
+	 */
+	protected abstract boolean isLoginExpiredForWSDL(Exception ex);
+
+	/**
+	 * Partner or Enterprise WSDL will give fine implementations to tell if they
+	 * can retry the exception
+	 * 
+	 * @param ex
+	 * @return
+	 */
+	protected abstract boolean canRetryForWSDL(Exception ex);
 
 	/**
 	 * Checks if their is an Invalid Session Issue.
@@ -58,7 +76,8 @@ public class WSErrorHandler {
 				return exCode.equalsIgnoreCase("INVALID_SESSION_ID");
 			}
 		}
-		return false;
+
+		return isLoginExpiredForWSDL(ex);
 	}
 
 	public boolean canRetry(Exception t) {
@@ -72,6 +91,11 @@ public class WSErrorHandler {
 			String exCode = CoreUtil.faultCodeFromSoapException(af);
 			if (exCode != null) {
 				return RETRYABLES.contains(exCode.toLowerCase());
+			}
+
+			// Check if WSDL implementation can retry the exception
+			if (canRetryForWSDL(t)) {
+				return true;
 			}
 
 			String faultString = CoreUtil.printStackTrace(t);

@@ -36,7 +36,6 @@ import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
 import com.tgerm.tolerado.wsc.core.Credential;
 import com.tgerm.tolerado.wsc.core.ToleradoException;
-import com.tgerm.tolerado.wsc.core.ToleradoSession.SessionType;
 import com.tgerm.tolerado.wsc.core.method.WSErrorHandler;
 import com.tgerm.tolerado.wsc.core.method.WSRecoverableMethod;
 
@@ -68,12 +67,6 @@ public class PartnerLoginWSMethod extends
 	protected void reLogin(ToleradoPartnerStub stub) {
 		// Override and do nothing, as its a Login Call already.
 		// We need to stop parent from attempting any relogin on this call
-	}
-
-	@Override
-	protected SessionType getSessionType() {
-		// Override this method, as we don't have stub during the login calls
-		return SessionType.Partner;
 	}
 
 	@Override

@@ -35,8 +35,6 @@ public abstract class ToleradoSession {
 		Partner, Enterprise
 	};
 
-	public abstract SessionType getSessionType();
-
 	public abstract String getMetadataServerUrl();
 
 	public abstract String getSessionId();

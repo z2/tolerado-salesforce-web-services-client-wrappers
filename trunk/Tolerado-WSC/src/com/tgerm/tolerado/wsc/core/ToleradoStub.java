@@ -28,7 +28,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.tgerm.tolerado.wsc.core;
 
-
 /**
  * Base class for all Tolerado Stubs, it gives transparent salesforce session
  * caching. Also, gives api to renew session if required
@@ -42,16 +41,16 @@ public abstract class ToleradoStub {
 	protected ToleradoSession session;
 	protected LoginDriver loginDriver;
 
+	public ToleradoStub(Credential c) {
+		// Loads the first available driver to use
+		this(c, LoginDriverLocator.locate());
+	}
+
 	public ToleradoStub(Credential credential, LoginDriver loginDriver) {
 		super();
 		this.credential = credential;
 		this.loginDriver = loginDriver;
 		prepare(false);
-	}
-
-	public ToleradoStub(Credential c) {
-		// Loads the first available driver to use
-		this(c, LoginDriverLocator.locate());
 	}
 
 	public void prepare(boolean forceNew) {
