@@ -33,7 +33,6 @@ import com.sforce.soap.enterprise.QueryResult;
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
 import com.tgerm.tolerado.wsc.core.Credential;
-import com.tgerm.tolerado.wsc.core.LoginDriver;
 import com.tgerm.tolerado.wsc.core.ToleradoException;
 import com.tgerm.tolerado.wsc.core.ToleradoStub;
 import com.tgerm.tolerado.wsc.core.method.WSRecoverableMethod;
@@ -48,12 +47,7 @@ public class ToleradoEnterpriseStub extends ToleradoStub {
 	private EnterpriseConnection binding;
 
 	public ToleradoEnterpriseStub(Credential cred) {
-		super(cred);
-	}
-
-	@Override
-	public LoginDriver getLoginDriver() {
-		return new EnterpriseLoginDriver();
+		super(cred, new EnterpriseLoginDriver());
 	}
 
 	/**

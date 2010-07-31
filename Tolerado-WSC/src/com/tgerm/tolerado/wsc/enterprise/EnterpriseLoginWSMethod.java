@@ -36,7 +36,6 @@ import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
 import com.tgerm.tolerado.wsc.core.Credential;
 import com.tgerm.tolerado.wsc.core.ToleradoException;
-import com.tgerm.tolerado.wsc.core.ToleradoSession.SessionType;
 import com.tgerm.tolerado.wsc.core.method.WSErrorHandler;
 import com.tgerm.tolerado.wsc.core.method.WSRecoverableMethod;
 
@@ -62,12 +61,6 @@ public class EnterpriseLoginWSMethod extends
 	@Override
 	protected boolean isLoginExpired(Exception t) {
 		return false;
-	}
-
-	@Override
-	protected SessionType getSessionType() {
-		// Override this method, as we don't have stub during the login calls
-		return SessionType.Enterprise;
 	}
 
 	@Override

@@ -35,10 +35,7 @@ import com.tgerm.tolerado.wsc.core.method.WSErrorHandler;
 public class EnterpriseWSErrorHandler extends WSErrorHandler {
 
 	@Override
-	public boolean canRetry(Exception t) {
-		if (super.canRetry(t))
-			return true;
-
+	public boolean canRetryForWSDL(Exception t) {
 		if (t instanceof ApiFault) {
 			ApiFault af = (ApiFault) t;
 			ExceptionCode code = af.getExceptionCode();
@@ -49,10 +46,7 @@ public class EnterpriseWSErrorHandler extends WSErrorHandler {
 	}
 
 	@Override
-	public boolean isLoginExpired(Exception t) {
-		if (super.isLoginExpired(t))
-			return true;
-
+	public boolean isLoginExpiredForWSDL(Exception t) {
 		if (t instanceof ApiFault) {
 			ExceptionCode code = null;
 			ApiFault af = (ApiFault) t;

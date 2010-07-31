@@ -31,7 +31,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.tgerm.tolerado.wsc.core.ToleradoException;
-import com.tgerm.tolerado.wsc.core.ToleradoSession;
 import com.tgerm.tolerado.wsc.core.ToleradoStub;
 import com.tgerm.tolerado.wsc.partner.ToleradoPartnerStub;
 
@@ -71,7 +70,7 @@ import com.tgerm.tolerado.wsc.partner.ToleradoPartnerStub;
  * @author abhinav
  * 
  */
-public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
+public abstract class WSRecoverableMethod<Result, Stub extends ToleradoStub> {
 	// this.getClass() used for accurate logging
 	private Log log = LogFactory.getLog(this.getClass());
 	// how many retries are done
@@ -79,7 +78,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 
 	private String methodName;
 
-	private S toleradoStub;
+	private Stub toleradoStub;
 
 	public WSRecoverableMethod(String methodName) {
 		super();
@@ -96,7 +95,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * @return
 	 * @throws ToleradoException
 	 */
-	public R invoke(S stub) {
+	public Result invoke(Stub stub) {
 		// Update the instance level attribute
 		toleradoStub = stub;
 
@@ -156,7 +155,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * @return
 	 * @throws Exception
 	 */
-	protected abstract R invokeActual(S stub) throws Exception;
+	protected abstract Result invokeActual(Stub stub) throws Exception;
 
 	/**
 	 * Will be called on Retryable failure to give a pause and retry. Child
@@ -168,10 +167,6 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 			Thread.sleep(3000 * delta);
 		} catch (InterruptedException e) {
 		}
-	}
-
-	protected ToleradoSession.SessionType getSessionType() {
-		return toleradoStub.getSession().getSessionType();
 	}
 
 	/**
@@ -192,7 +187,7 @@ public abstract class WSRecoverableMethod<R, S extends ToleradoStub> {
 	 * @param stub
 	 *            The {@link ToleradoPartnerStub} instance
 	 */
-	protected void reLogin(S stub) {
+	protected void reLogin(Stub stub) {
 		if (stub != null) {
 			log.warn("Preparing New SFDC Session, by forcing a login call");
 			stub.prepare(true);

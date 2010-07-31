@@ -72,11 +72,6 @@ public class EnterpriseLoginDriver implements LoginDriver {
 		}
 
 		@Override
-		public SessionType getSessionType() {
-			return SessionType.Enterprise;
-		}
-
-		@Override
 		public LoginDriver getLoginDriver() {
 			return loginDriver;
 		}

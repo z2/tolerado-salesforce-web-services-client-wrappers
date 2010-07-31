@@ -42,16 +42,20 @@ public class LoginDriverLocator {
 	 */
 	private static final Map<String, Class<?>> WSDL_CONNECTOR_CLASSES = new HashMap<String, Class<?>>();
 	static {
+		// This block will load and cache for once the classes for WSDL
+		// connectors.
 		Class<?> connectorClass;
 		try {
 			connectorClass = Class.forName(CLS_PARTNER_DRIVER);
 			WSDL_CONNECTOR_CLASSES.put(CLS_PARTNER_DRIVER, connectorClass);
 		} catch (Exception e) {
+			// do nothing, as we are just trying to load the classes
 		}
 		try {
 			connectorClass = Class.forName(CLS_ENTERPRISE_DRIVER);
 			WSDL_CONNECTOR_CLASSES.put(CLS_ENTERPRISE_DRIVER, connectorClass);
 		} catch (Exception e) {
+			// do nothing, as we are just trying to load the classes
 		}
 	}
 

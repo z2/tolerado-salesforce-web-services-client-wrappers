@@ -75,11 +75,6 @@ public class PartnerLoginDriver implements LoginDriver {
 		}
 
 		@Override
-		public SessionType getSessionType() {
-			return SessionType.Partner;
-		}
-
-		@Override
 		public LoginDriver getLoginDriver() {
 			return driver;
 		}
