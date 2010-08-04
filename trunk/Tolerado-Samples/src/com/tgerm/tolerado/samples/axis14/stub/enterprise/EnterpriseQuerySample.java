@@ -31,6 +31,7 @@ package com.tgerm.tolerado.samples.axis14.stub.enterprise;
 import com.sforce.soap.enterprise.QueryResult;
 import com.sforce.soap.enterprise.sobject.Contact;
 import com.tgerm.tolerado.axis14.enterprise.ToleradoEnterpriseStub;
+import com.tgerm.tolerado.samples.axis14.stub.partner.QuerySample;
 import com.tgerm.tolerado.samples.cfg.LoginCfg;
 
 public class EnterpriseQuerySample {
@@ -41,5 +42,6 @@ public class EnterpriseQuerySample {
 		QueryResult qr = s.query("select id, Name from contact limit 1");
 		Contact con = (Contact) qr.getRecords()[0];
 		System.out.println("Loaded one contact with Name:" + con.getName());
+		QuerySample.main(args);
 	}
 }
