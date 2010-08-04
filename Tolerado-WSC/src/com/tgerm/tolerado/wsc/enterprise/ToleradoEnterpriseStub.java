@@ -29,6 +29,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.wsc.enterprise;
 
 import com.sforce.soap.enterprise.EnterpriseConnection;
+import com.sforce.soap.enterprise.LoginResult;
 import com.sforce.soap.enterprise.QueryResult;
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
@@ -75,6 +76,14 @@ public class ToleradoEnterpriseStub extends ToleradoStub {
 					"Failed to instantiate EnterpriseConnection, user:"
 							+ credential.getUserName(), e);
 		}
+	}
+
+	/**
+	 * Gives the salesforce login result
+	 * 
+	 */
+	public LoginResult getLoginResult() {
+		return (LoginResult) session.getLoginResult();
 	}
 
 	/**
