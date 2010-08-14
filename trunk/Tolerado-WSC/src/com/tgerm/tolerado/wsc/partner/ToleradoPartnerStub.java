@@ -168,6 +168,28 @@ public class ToleradoPartnerStub extends ToleradoStub {
 		}.invoke(this);
 	}
 
+	public SaveResult[] create(final SObject[] sObjects) {
+		return new WSRecoverableMethod<SaveResult[], ToleradoPartnerStub>(
+				"create") {
+			@Override
+			protected SaveResult[] invokeActual(ToleradoPartnerStub stub)
+					throws Exception {
+				return stub.getPartnerBinding().create(sObjects);
+			}
+		}.invoke(this);
+	}
+
+	public SaveResult[] update(final SObject[] sObjects) {
+		return new WSRecoverableMethod<SaveResult[], ToleradoPartnerStub>(
+				"update") {
+			@Override
+			protected SaveResult[] invokeActual(ToleradoPartnerStub stub)
+					throws Exception {
+				return stub.getPartnerBinding().update(sObjects);
+			}
+		}.invoke(this);
+	}
+
 	public DescribeDataCategoryGroupResult[] describeDataCategoryGroups(
 			final String[] sObjectType) {
 		return new WSRecoverableMethod<DescribeDataCategoryGroupResult[], ToleradoPartnerStub>(
@@ -270,28 +292,6 @@ public class ToleradoPartnerStub extends ToleradoStub {
 			protected DescribeTabSetResult[] invokeActual(
 					ToleradoPartnerStub stub) throws Exception {
 				return stub.getPartnerBinding().describeTabs();
-			}
-		}.invoke(this);
-	}
-
-	public SaveResult[] create(final SObject[] sObjects) {
-		return new WSRecoverableMethod<SaveResult[], ToleradoPartnerStub>(
-				"create") {
-			@Override
-			protected SaveResult[] invokeActual(ToleradoPartnerStub stub)
-					throws Exception {
-				return stub.getPartnerBinding().create(sObjects);
-			}
-		}.invoke(this);
-	}
-
-	public SaveResult[] update(final SObject[] sObjects) {
-		return new WSRecoverableMethod<SaveResult[], ToleradoPartnerStub>(
-				"update") {
-			@Override
-			protected SaveResult[] invokeActual(ToleradoPartnerStub stub)
-					throws Exception {
-				return stub.getPartnerBinding().update(sObjects);
 			}
 		}.invoke(this);
 	}

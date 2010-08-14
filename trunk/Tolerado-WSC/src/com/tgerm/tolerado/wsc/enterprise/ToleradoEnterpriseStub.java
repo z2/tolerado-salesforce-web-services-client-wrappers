@@ -28,9 +28,12 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.tgerm.tolerado.wsc.enterprise;
 
+import com.sforce.soap.enterprise.DeleteResult;
 import com.sforce.soap.enterprise.EnterpriseConnection;
 import com.sforce.soap.enterprise.LoginResult;
 import com.sforce.soap.enterprise.QueryResult;
+import com.sforce.soap.enterprise.SaveResult;
+import com.sforce.soap.enterprise.sobject.SObject;
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
 import com.tgerm.tolerado.wsc.core.Credential;
@@ -126,6 +129,41 @@ public class ToleradoEnterpriseStub extends ToleradoStub {
 				QueryResult query = stub.getEnterpriseBinding().queryMore(
 						queryLocator);
 				return query;
+			}
+		}.invoke(this);
+	}
+
+	public DeleteResult[] delete(final String[] ids) {
+		return new WSRecoverableMethod<DeleteResult[], ToleradoEnterpriseStub>(
+				"delete") {
+			@Override
+			protected DeleteResult[] invokeActual(ToleradoEnterpriseStub stub)
+					throws Exception {
+				DeleteResult[] results = stub.getEnterpriseBinding()
+						.delete(ids);
+				return results;
+			}
+		}.invoke(this);
+	}
+
+	public SaveResult[] create(final SObject[] sObjects) {
+		return new WSRecoverableMethod<SaveResult[], ToleradoEnterpriseStub>(
+				"create") {
+			@Override
+			protected SaveResult[] invokeActual(ToleradoEnterpriseStub stub)
+					throws Exception {
+				return stub.getEnterpriseBinding().create(sObjects);
+			}
+		}.invoke(this);
+	}
+
+	public SaveResult[] update(final SObject[] sObjects) {
+		return new WSRecoverableMethod<SaveResult[], ToleradoEnterpriseStub>(
+				"update") {
+			@Override
+			protected SaveResult[] invokeActual(ToleradoEnterpriseStub stub)
+					throws Exception {
+				return stub.getEnterpriseBinding().update(sObjects);
 			}
 		}.invoke(this);
 	}

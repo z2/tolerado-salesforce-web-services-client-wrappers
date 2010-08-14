@@ -29,6 +29,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.tgerm.tolerado.wsc.metadata;
 
 import com.sforce.soap.metadata.AsyncResult;
+import com.sforce.soap.metadata.DescribeMetadataResult;
 import com.sforce.soap.metadata.MetadataConnection;
 import com.sforce.soap.metadata.RetrieveRequest;
 import com.sforce.ws.ConnectionException;
@@ -89,6 +90,17 @@ public class ToleradoMetaStub extends ToleradoStub {
 		};
 		AsyncResult results = wsMethod.invoke(this);
 		return results;
+	}
+
+	public DescribeMetadataResult describeMetadata(final double asOfVersion) {
+		return new WSRecoverableMethod<DescribeMetadataResult, ToleradoMetaStub>(
+				"describeMetadata") {
+			@Override
+			protected DescribeMetadataResult invokeActual(ToleradoMetaStub stub)
+					throws Exception {
+				return getMetaBinding().describeMetadata(asOfVersion);
+			}
+		}.invoke(this);
 	}
 
 	/**
