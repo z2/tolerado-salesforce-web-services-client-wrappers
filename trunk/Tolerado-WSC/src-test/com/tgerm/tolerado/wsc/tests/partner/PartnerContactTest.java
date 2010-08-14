@@ -31,6 +31,10 @@ package com.tgerm.tolerado.wsc.tests.partner;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.sforce.soap.partner.DeleteResult;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SaveResult;
 import com.sforce.soap.partner.sobject.SObject;
@@ -38,27 +42,44 @@ import com.tgerm.tolerado.samples.cfg.LoginCfg;
 import com.tgerm.tolerado.wsc.core.Credential;
 import com.tgerm.tolerado.wsc.partner.ToleradoPartnerStub;
 
-public class PartnerWSDLTest extends TestCase {
+public class PartnerContactTest extends TestCase {
+	private static Log log = LogFactory.getLog(PartnerContactTest.class);
 
 	private Credential credential = LoginCfg.self.getCredential();
+	private String firstName;
+	private String lastName;
+	private String savedContactId;
 
 	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		if (savedContactId != null) {
+			log.debug("Deleting Contact :" + firstName + " " + lastName
+					+ " having recordId:" + savedContactId);
+			ToleradoPartnerStub stub = new ToleradoPartnerStub(credential);
+			DeleteResult[] deleteResults = stub
+					.delete(new String[] { savedContactId });
+			Assert.assertNotNull(deleteResults);
+			Assert.assertEquals(1, deleteResults.length);
+			Assert.assertTrue(deleteResults[0].getSuccess());
+		}
 	}
 
-	public void testCreateContact() throws Exception {
+	public void testCRUDOnContact() throws Exception {
 		ToleradoPartnerStub stub = new ToleradoPartnerStub(credential);
+		//
 		// Create a new Contact
+		//
 		SObject contact = new SObject();
 		contact.setType("Contact");
-		String firstName = "Abhinav";
-		// Current millis time added to avoid conflicts
-		String lastName = "Gupta-" + System.currentTimeMillis();
+		firstName = "Abhinav";
+		lastName = "Gupta-" + System.currentTimeMillis();
 		contact.setField("FirstName", firstName);
 		contact.setField("LastName", lastName);
+
+		log.debug("Creating new Contact :" + firstName + " " + lastName);
 		SaveResult[] saveResults = stub.create(new SObject[] { contact });
-		String savedContactId = null;
+		savedContactId = null;
 		for (SaveResult saveResult : saveResults) {
 			if (!saveResult.isSuccess()) {
 				Assert
@@ -66,19 +87,55 @@ public class PartnerWSDLTest extends TestCase {
 								+ firstName + " " + lastName);
 			} else {
 				savedContactId = saveResult.getId();
+				log.debug("Created new Contact :" + firstName + " " + lastName
+						+ " having recordId:" + savedContactId);
 			}
 		}
 
+		// 
+		// Query the previously created Contact
+		//
+		queryAndAssertContact(stub);
+
+		//
+		// Update the same Contact
+		//
+		contact = new SObject();
+		contact.setType("Contact");
+		lastName = "Gupta-" + System.currentTimeMillis();
+		contact.setField("LastName", lastName);
+		contact.setId(savedContactId);
+
+		SaveResult[] updateResults = stub.update(new SObject[] { contact });
+		for (SaveResult updateResult : updateResults) {
+			if (!updateResult.isSuccess()) {
+				Assert
+						.fail("Failed to update Contact record using Partner for name :"
+								+ firstName + " " + lastName);
+			} else {
+				log.debug("Updated Contact :" + firstName + " " + lastName
+						+ " having recordId:" + savedContactId);
+			}
+		}
+
+		queryAndAssertContact(stub);
+
+	}
+
+	private SObject queryAndAssertContact(ToleradoPartnerStub stub) {
+		log.debug("Querying Contact having recordId:" + savedContactId);
 		QueryResult queryResult = stub
 				.query("select Id, FirstName, LastName from Contact where Id ='"
 						+ savedContactId + "'");
+
 		Assert.assertNotNull(queryResult);
 		Assert.assertNotNull(queryResult.getRecords());
 		// Only 1 contact should come
 		Assert.assertEquals(queryResult.getRecords().length, 1);
+		// Contact just retrieved
 		SObject contactFetched = queryResult.getRecords()[0];
 		Assert.assertEquals(contactFetched.getField("FirstName"), firstName);
 		Assert.assertEquals(contactFetched.getField("LastName"), lastName);
-
+		return contactFetched;
 	}
 }
